@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -11,6 +12,12 @@ class OrderController extends Controller
         return view('addForm');
     }
 
+    public function insertOrder(Request $request)
+    {
+        Order::create($request->all());
+        return redirect()->route('newOrder');
+    }
+
     public function showHome()
     {
         return view('home');
@@ -18,6 +25,7 @@ class OrderController extends Controller
 
     public function showOrders()
     {
-        return view('orders');
+        $orders = Order::all();
+        return view('orders')->with('orders',$orders);
     }
 }
