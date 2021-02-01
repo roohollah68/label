@@ -1,1 +1,1 @@
-body{text-align:right}
+body{text-align:right}.form-group.required label:after{content:"*";color:red}
