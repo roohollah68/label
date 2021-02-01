@@ -1,10 +1,10 @@
 @extends('layout.main')
 
 @section('title')
-     افزودن سفارش جدید
+    صفحه مدیریت
 @endsection
 
 
 @section('content')
-    form
+
 @endsection

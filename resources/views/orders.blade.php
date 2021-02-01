@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('title')
-     افزودن سفارش جدید
+     مشاهده سفارشات
 @endsection
 
 

@@ -10,4 +10,14 @@ class OrderController extends Controller
     {
         return view('addForm');
     }
+
+    public function showHome()
+    {
+        return view('home');
+    }
+
+    public function showOrders()
+    {
+        return view('orders');
+    }
 }
