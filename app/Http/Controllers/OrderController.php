@@ -14,8 +14,9 @@ class OrderController extends Controller
 
     public function insertOrder(Request $request)
     {
-        Order::create($request->all());
-        return redirect()->route('newOrder');
+        if(Order::create($request->all()))
+            return ['سفارش با موفقیت ثبت شد','success'];
+        return ['مشکلی به وجود آمده است','error'];
     }
 
     public function showHome()

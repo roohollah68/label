@@ -4,6 +4,9 @@
     افزودن سفارش جدید
 @endsection
 
+@section('files')
+    <script src="{{mix('js/addOrder.js')}}"></script>
+@endsection
 
 @section('content')
 
@@ -12,9 +15,9 @@
         <div class="row">
             @foreach([
                 ['name' , 'text' , 'نام و نام خانوادگی' , 'input' , 'required'],
-                ['phone' , 'tel' , 'شماره تماس' , 'input', ''],
+                ['phone' , 'tel' , 'شماره تماس' , 'input', 'minlength=10 maxlength=11 pattern=\d*'],
                 ['address' , 'text' , 'آدرس' , 'textarea', 'required'],
-                ['zip_code' , 'text' , 'کد پستی' , 'input', ''],
+                ['zip_code' , 'text' , 'کد پستی' , 'input', 'minlength=10 maxlength=10 pattern=\d*'],
                 ['orders' , 'text' , 'سفارشات' , 'textarea', 'required'],
                 ['desc' , 'text' , 'توضیحات' , 'textarea', ''],
 

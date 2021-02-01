@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('phone',30)->nullable();
             $table->string('zip_code')->nullable();
             $table->string('orders');
-            $table->string('desc',300);
+            $table->string('desc',300)->nullable();
             $table->boolean('printed')->default(false);
             $table->timestamps();
         });
