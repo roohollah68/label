@@ -19,7 +19,7 @@
                 ['desc' , 'text' , 'توضیحات' , 'textarea', ''],
 
             ] as $arr)
-                <div class="col-sm-6">
+                <div class="col-md-6">
                     <div class="form-group input-group {{$arr[4]}}">
                         <div class="input-group-append">
                             <label for="{{$arr[0]}}" class="input-group-text">{{$arr[2]}}:</label>
