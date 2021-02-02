@@ -142,19 +142,58 @@ function generatePDF(id) {
         }
     })
     let dialog = `
-    <div title="مشاهده سفارش" class="dialogs">
-    <span>نام و نام خانوادگی:</span> <b>${row.name}</b> <br>
-    <span>شماره تماس:</span> <b>${row.phone}</b> <br>
-    <span>آدرس:</span> <b>${row.address}</b> <br>
-    <span>کد پستی:</span> <b>${row.zip_code}</b> <br>
-    <span>سفارشات:</span> <b>${row.orders}</b> <br>
-    <span>توضیحات:</span> <b>${row.desc}</b> <br>
-    <span>زمان ثبت:</span> <b>${row.created_at}</b> <br>
-    <span>زمان آخرین ویرایش:</span> <b>${row.updated_at}</b> <br>
-    <span>زمان حذف:</span> <b>${row.deleted_at}</b> <br>
-</div>
+    <span>نام و نام خانوادگی </span>: <b>${row.name}</b> <br>
+    <span>شماره تماس </span>: <b>${row.phone}</b> <br>
+    <span>آدرس </span>: <b>${row.address}</b> <br>
+    <span>کد پستی </span>: <b>${row.zip_code}</b> <br>
+    <span>سفارشات </span>: <b>${row.orders}</b> <br>
+
     `;
+    let opt = {
+        margin: 0.2,
+        image: {type:'jpeg',quality : 1},
+        filename:     row.name +'_'+row.id +'.pdf',
+        // pagebreak: {  after: '.breakhere' },
+        jsPDF:        { format: [7.12, 2.18],unit:'in',orientation :'l' }
+    };
     html2pdf()
+        .set(opt)
+        .from(dialog)
+        .save();
+}
+
+function generatePDFs() {
+    if(ids.length ===0)
+    {
+        $.notify( 'ابتدا باید سفارشات مورد نظر را انتخاب کنید','error')
+        return
+    }
+    let dialog = ''
+    ids.forEach(id=>{
+        let row
+        orders.forEach(order => {
+            if (order.id == id) {
+                row = order;
+                return;
+            }
+        })
+        dialog += `
+    <span>نام و نام خانوادگی </span>: <b>${row.name}</b> <br>
+    <span>شماره تماس </span>: <b>${row.phone}</b> <br>
+    <span>آدرس </span>: <b>${row.address}</b> <br>
+    <span>کد پستی </span>: <b>${row.zip_code}</b> <br>
+    <span>سفارشات </span>: <b>${row.orders}</b> <br class="breakhere">
+    `;})
+
+    let opt = {
+        margin: 0.2,
+        image: {type:'jpeg',quality : 1},
+        filename:     'سفازشات.pdf',
+        pagebreak: {  after: '.breakhere' },
+        jsPDF:        { format: [7.12, 2.18],unit:'in',orientation :'l' }
+    };
+    html2pdf()
+        .set(opt)
         .from(dialog)
         .save();
 }
