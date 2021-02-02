@@ -9,7 +9,9 @@
 @endsection
 
 @section('content')
-
+    <script>
+        let edit = false
+    </script>
     <form action="" method="post">
         @csrf
         <div class="row">
@@ -28,16 +30,11 @@
                             <label for="{{$arr[0]}}" class="input-group-text w-100">{{$arr[2]}}:</label>
                         </div>
                         <{{$arr[3]}} type="{{$arr[1]}}" id="{{$arr[0]}}" class="form-control" name="{{$arr[0]}}" rows="2" {{$arr[4]}}></{{$arr[3]}}>
-{{--                        <div class="input-group-prepend">--}}
-{{--                            <span class="btn btn-outline-secondary fa fa-paste" onclick="$('#{{$arr[0]}}').val(await navigator.clipboard.readText())"></span>--}}
-{{--                        </div>--}}
                     </div>
                 </div>
         @endforeach
         </div>
         <input type="submit" class="btn btn-success" value="ذخیره">&nbsp;
         <input type="reset" class="btn btn-danger" value="پاک کردن">
-
-
     </form>
 @endsection

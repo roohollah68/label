@@ -7,21 +7,21 @@ $(() => {
         'orders',
         'desc',
     ]
-
-    $("form").submit(function (e) {
-        let data = {};
-        ids.forEach(id => {
-            data[id] = $("#" + id).val();
-        })
-        data['_token'] = $('input[name=_token]').val();
-        $.post('add_order', data)
-            .done(res => {
-                $.notify(res[0], res[1])
-                if (res[1] === 'success')
-                    $('input[type=reset]').click();
+    if (!edit)
+        $("form").submit(function (e) {
+            let data = {};
+            ids.forEach(id => {
+                data[id] = $("#" + id).val();
             })
-        return false;
-    })
+            data['_token'] = $('input[name=_token]').val();
+            $.post('add_order', data)
+                .done(res => {
+                    $.notify(res[0], res[1])
+                    if (res[1] === 'success')
+                        $('input[type=reset]').click();
+                })
+            return false;
+        })
 
 
     invalid_messages()
@@ -45,5 +45,5 @@ function invalid_messages() {
             e.target.setCustomValidity('فقط عدد مجاز است.');
         }
 
-    }).on('change , keypress , keydown',(e) => e.target.setCustomValidity(''))
+    }).on('change , keypress , keydown', (e) => e.target.setCustomValidity(''))
 }

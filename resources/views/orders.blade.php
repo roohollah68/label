@@ -6,33 +6,16 @@
 
 @section('files')
     <script src="{{mix('js/orders.js')}}"></script>
+    <script src="{{mix('js/html2pdf.bundle.min.js')}}"></script>
 @endsection
 
 @section('content')
+    @csrf
+<label for="deleted_orders">مشاهده سفارشات حذف شده</label><input type="checkbox" id="deleted_orders"  onclick="deleted = this.checked ; get_data()">
+    <br>
+    @include('layout.command')
     <table>
-        <thead>
-        <tr>
-            <th><input type="checkbox"></th>
-            <th>#</th>
-            <th>نام</th>
-            <th>سفارش</th>
-            <th>توضیحات</th>
-            <th>مشاهده</th>
-            <th>عملیات</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($orders as $counter=>$order)
-            <tr>
-                <th><input type="checkbox"></th>
-                <td>{{$counter + 1}}</td>
-                <td>{{$order->name}}</td>
-                <td>{{substr($order->orders ,0,40)}} ...</td>
-                <td>{{substr($order->desc ,0,40)}} ...</td>
-                <td><i>show</i></td>
-                <td><i>delete</i> <i>edit</i> <i>pdf</i> </td>
-            </tr>
-        @endforeach
-        </tbody>
     </table>
+    @include('layout.command')
+
 @endsection

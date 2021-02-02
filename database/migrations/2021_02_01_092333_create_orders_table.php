@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('orders');
             $table->string('desc',300)->nullable();
             $table->boolean('printed')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
