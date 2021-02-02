@@ -4,6 +4,10 @@
     مشاهده سفارشات
 @endsection
 
+@section('files')
+    <script src="{{mix('js/orders.js')}}"></script>
+@endsection
+
 @section('content')
     <table>
         <thead>

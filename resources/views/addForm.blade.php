@@ -15,17 +15,17 @@
         <div class="row">
             @foreach([
                 ['name' , 'text' , 'نام و نام خانوادگی' , 'input' , 'required'],
-                ['phone' , 'tel' , 'شماره تماس' , 'input', 'minlength=10 maxlength=11 pattern=\d*'],
+                ['phone' , 'tel' , 'شماره تماس' , 'input', 'required minlength=10 maxlength=11 pattern=\d*'],
                 ['address' , 'text' , 'آدرس' , 'textarea', 'required'],
-                ['zip_code' , 'text' , 'کد پستی' , 'input', 'minlength=10 maxlength=10 pattern=\d*'],
+                ['zip_code' , 'text' , 'کد پستی' , 'input', 'required minlength=10 maxlength=10 pattern=\d*'],
                 ['orders' , 'text' , 'سفارشات' , 'textarea', 'required'],
-                ['desc' , 'text' , 'توضیحات' , 'textarea', ''],
+                ['desc' , 'text' , 'توضیحات' , 'textarea', 'required'],
 
             ] as $arr)
                 <div class="col-md-6">
                     <div class="form-group input-group {{$arr[4]}}">
-                        <div class="input-group-append">
-                            <label for="{{$arr[0]}}" class="input-group-text">{{$arr[2]}}:</label>
+                        <div class="input-group-append" style="min-width: 160px">
+                            <label for="{{$arr[0]}}" class="input-group-text w-100">{{$arr[2]}}:</label>
                         </div>
                         <{{$arr[3]}} type="{{$arr[1]}}" id="{{$arr[0]}}" class="form-control" name="{{$arr[0]}}" rows="2" {{$arr[4]}}></{{$arr[3]}}>
 {{--                        <div class="input-group-prepend">--}}
