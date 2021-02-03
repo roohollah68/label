@@ -14,6 +14,7 @@ function get_data() {
     $.post('get_orders', {_token: token, deleted: deleted})
         .done(res => {
             orders = res;
+            ids = [];
             prepare_data();
         })
 }
@@ -87,7 +88,7 @@ function create_table(data) {
             }
         }
     });
-    $('.main_check').attr('checked', false);
+    $('.main_check').prop('checked', false);
 }
 
 function delete_order(id) {
