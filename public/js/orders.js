@@ -25,8 +25,15 @@ function prepare_data() {
             `<input type="checkbox" class="orders_checkbox" onclick="list_ids()" order_id="${row.id}">`,
             key + 1,
             row.name,
-            row.orders,
-            row.desc,
+            (row.orders.length>30)?
+                row.orders.substr(0,30) + ' ...'
+                :
+                row.orders
+            ,
+            (row.desc.length>30)?
+                row.desc.substr(0,30) + ' ...'
+                :
+                row.desc,
             `<i class="fa fa-eye btn btn-info" onclick="view_order(${row.id})"></i>`,
             ` <i class="fa fa-trash-alt btn btn-danger" onclick="delete_order(${row.id})" title="حذف سفارش" ></i>` +
             (deleted ? `
