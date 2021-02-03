@@ -7,3 +7,8 @@ body{
     color:red;
 }
 
+.printed ,.printed span , .printed b{
+    font-size: 40px;
+    direction: rtl;
+}
+
