@@ -14,7 +14,7 @@
 <label for="deleted_orders">مشاهده سفارشات حذف شده</label><input type="checkbox" id="deleted_orders"  onclick="deleted = this.checked ; get_data()">
     <br>
     @include('layout.command')
-    <table>
+    <table class="stripe">
     </table>
     @include('layout.command')
 
