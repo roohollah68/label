@@ -168,7 +168,7 @@ function generatePDFs() {
         $.notify( 'ابتدا باید سفارشات مورد نظر را انتخاب کنید','error')
         return
     }
-    let dialog = ''
+    let dialog = [];
     ids.forEach(id=>{
         let row
         orders.forEach(order => {
@@ -177,14 +177,14 @@ function generatePDFs() {
                 return;
             }
         })
-        dialog += `
+        dialog.push(`
     <span>نام و نام خانوادگی </span>: <b>${row.name}</b> <br>
     <span>شماره تماس </span>: <b>${row.phone}</b> <br>
     <span>آدرس </span>: <b>${row.address}</b> <br>
     <span>کد پستی </span>: <b>${row.zip_code}</b> <br>
-    <span>سفارشات </span>: <b>${row.orders}</b> <br class="breakhere">
-    `;})
-
+    <span>سفارشات </span>: <b>${row.orders}</b>
+    `) ;})
+    dialog=dialog.join('<br class="breakhere">')
     let opt = {
         margin: 0.2,
         image: {type:'jpeg',quality : 1},
