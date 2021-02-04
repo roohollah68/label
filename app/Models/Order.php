@@ -19,5 +19,11 @@ class Order extends Model
         'orders',
         'desc',
         'printed',
+        'receipt'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

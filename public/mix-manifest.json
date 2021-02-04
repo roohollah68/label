@@ -1,6 +1,9 @@
 {
+    "/js/app.js": "/js/app.js?id=f585126a98d51a9dee50",
     "/css/style.css": "/css/style.css?id=22c12ae7d1c274d9046d",
+    "/css/app.css": "/css/app.css?id=dde00b61ef399014b7f6",
     "/js/addOrder.js": "/js/addOrder.js?id=896790bacd4475e924d4",
+    "/js/app.js.LICENSE.txt": "/js/app.js.LICENSE.txt?id=275fe79abee3b697f167",
     "/js/html2pdf.bundle.min.js": "/js/html2pdf.bundle.min.js?id=6bcfde3253911f97c5e8",
-    "/js/orders.js": "/js/orders.js?id=77725ccd0516332b2421"
+    "/js/orders.js": "/js/orders.js?id=f6161a5f91714e154f73"
 }

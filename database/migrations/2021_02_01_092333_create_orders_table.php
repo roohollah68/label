@@ -15,13 +15,14 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('name');
             $table->string('address',300);
             $table->string('phone',30)->nullable();
             $table->string('zip_code')->nullable();
             $table->string('orders');
             $table->string('desc',300)->nullable();
-            $table->boolean('printed')->default(false);
+            $table->string('receipt')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
