@@ -10,9 +10,11 @@ class EditOrderController extends Controller
     public function editForm($id)
     {
         if (auth()->user()->role == 'admin') {
+            $admin = true;
             $order = Order::findOrFail($id);
             return view('editForm')->with(['order' => $order]);
-        }
+        }else
+            $admin = false;
         $order = auth()->user()->orders()->findOrFail($id);
         return view('editForm')->with(['order' => $order]);
     }

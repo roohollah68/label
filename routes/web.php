@@ -35,6 +35,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('restore_order/{id}',[DeleteOrderController::class , 'restoreOrder']);
 
     Route::get('/',[ManageUserController::class , 'showHome']);
+    Route::get('/manage_users',[ManageUserController::class , 'show'])->name('manageUsers');
 
 });
 

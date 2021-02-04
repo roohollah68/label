@@ -120,7 +120,7 @@ function create_table(data) {
                 "searchable": false
             },
             {
-                targets: [0, 5, 6, 8, 9, 10, 11, 12],
+                targets: [0, 5, 6,7, 8, 9, 10, 11, 12],
                 orderable: false
             },
 
