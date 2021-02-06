@@ -41,6 +41,7 @@ class Authenticate implements AuthenticatesRequests
     {
         $this->authenticate($request, $guards);
 
+
         return $next($request);
     }
 

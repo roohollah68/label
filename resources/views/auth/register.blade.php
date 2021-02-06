@@ -31,7 +31,7 @@
             </div>
 
             <div class="mt-4 required">
-                <x-label for="website" :value="__('سفیر کدام وبسایت هستید؟')"/>
+                <x-label for="website" :value="__('سفیر کدام فروشگاه هستید؟')"/>
                 <select class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="website" name="website">
                     <option value="matchano" selected>matchano.ir</option>
                     <option value="berryno">berryno.ir</option>

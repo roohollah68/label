@@ -14,13 +14,26 @@ class NewOrderController extends Controller
         } else {
             $admin = false;
         }
-        return view('addForm');
+        return view('addForm',['admin'=>$admin]);
     }
 
     public function insertOrder(Request $request)
     {
-        if (auth()->user()->orders()->create($request->all()))
-            return ['سفارش با موفقیت ثبت شد', 'success'];
-        return ['مشکلی به وجود آمده است', 'error'];
+        request()->validate([
+            'receipt'  => 'mimes:jpeg,jpg,png,bmp|max:2048',
+        ]);
+        if($request->file("receipt")){
+            $request->receipt = $request->file("receipt")->store("",'public');
+        }
+        auth()->user()->orders()->create([
+            'name'=> $request->name,
+            'phone'=> $request->phone,
+            'address'=> $request->address,
+            'zip_code'=> $request->zip_code,
+            'orders'=> $request->orders,
+            'desc'=> $request->desc,
+            'receipt'=> $request->receipt,
+        ]);
+        return redirect()->route('listOrders');
     }
 }

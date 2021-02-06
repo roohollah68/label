@@ -11,3 +11,8 @@ body{
     font-size: 40px;
     direction: rtl;
 }
+
+.printed{
+    max-height: 500px;
+    overflow-y: hidden;
+}

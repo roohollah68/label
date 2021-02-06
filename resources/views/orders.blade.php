@@ -15,15 +15,26 @@
                                                                      onclick="prepare_data()">
     <br>
     @if($admin)
-    <label for="user">سفیر:</label><select id="user" onchange="prepare_data()">
-    </select>
-    <label for="website">فروشگاه:</label><select id="website" onchange="prepare_data()">
-        <option value="all" selected>همه</option>
-        <option value="matchano">matchano.ir</option>
-        <option value="berryno">berryno.ir</option>
-        <option value="noveltea">noveltea.ir</option>
-        <option value="dorateashop">dorateashop.ir</option>
-    </select>
+        <div class="form-group input-group col-lg-3">
+            <div class="input-group-append">
+                <label for="user" class="input-group-text">سفیر:</label>
+            </div>
+            <select class="form-control" id="user" onchange="prepare_data()">
+            </select>
+        </div>
+
+        <div class="form-group input-group col-lg-3">
+            <div class="input-group-append">
+                <label for="website" class="input-group-text">فروشگاه:</label>
+            </div>
+            <select class="form-control" id="website" onchange="prepare_data()">
+                <option value="all" selected>همه</option>
+                <option value="matchano">matchano</option>
+                <option value="berryno">berryno</option>
+                <option value="noveltea">noveltea</option>
+                <option value="dorateashop">dorateashop</option>
+            </select>
+        </div>
     @endif
     <table class="stripe">
     </table>

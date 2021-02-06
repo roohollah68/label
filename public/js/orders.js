@@ -226,8 +226,12 @@ function view_order(id) {
     let row = orders[id]
 
     let dialog = `
-    <div title="مشاهده سفارش" class="dialogs">
-    <span>نام و نام خانوادگی:</span> <b>${row.name}</b> <br>
+    <div title="مشاهده سفارش" class="dialogs">`+
+        (row.receipt?
+    `<a href="receipt/${row.receipt}" target="_blank"><img style="width: 300px" src="receipt/${row.receipt}"></a>`
+        :
+        "")
+    +`<span>نام و نام خانوادگی:</span> <b>${row.name}</b> <br>
     <span>شماره تماس:</span> <b>${row.phone}</b> <br>
     <span>آدرس:</span> <b>${row.address}</b> <br>
     <span>کد پستی:</span> <b>${row.zip_code}</b> <br>

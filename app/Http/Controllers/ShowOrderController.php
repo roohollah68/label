@@ -21,7 +21,7 @@ class ShowOrderController extends Controller
     public function getOrders()
     {
         if (auth()->user()->role == 'admin') {
-            $users = User::all();
+            $users = User::withTrashed()->get();
             $orders = Order::withTrashed()->get();
         }else{
             $users = [auth()->user()];
@@ -29,13 +29,19 @@ class ShowOrderController extends Controller
         }
 
         include ('../app/jdf.php');
+        $dates = [];
         foreach ($orders as $key=>$order){
-            $order->created_at_p = jdate('Y/m/d H:i' , $order->created_at->getTimestamp());
-            $order->updated_at_p = jdate('Y/m/d H:i' , $order->updated_at->getTimestamp());
-            $order->deleted_at?
-                ($order->deleted_at_p = jdate('Y/m/d H:i' , $order->deleted_at->getTimestamp()))
-                :
-                ($order->deleted_at_p = $order->deleted_at);
+            $dates[$key][0] = $order->created_at->getTimestamp();
+            $dates[$key][1] = $order->updated_at->getTimestamp();
+            $order->deleted_at?($dates[$key][2] = $order->deleted_at->getTimestamp()):($dates[$key][2] = null);
+        }
+        foreach ($orders as $key=>$order){
+            $order->created_at_p = jdate('Y/m/d H:i' , $dates[$key][0]);
+            $order->updated_at_p = jdate('Y/m/d H:i' , $dates[$key][1]);
+            if($dates[$key][2])
+                $order->deleted_at_p = jdate('Y/m/d H:i' , $dates[$key][2]);
+            else
+                $order->deleted_at_p = null;
             $orders[$key] = $order;
         }
         return [$orders , $users];
