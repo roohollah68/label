@@ -19,7 +19,8 @@ class ManageUserController extends Controller
         if (auth()->user()->role != 'admin')
             abort(404);
         $users = User::all();
-        return view('manage-users', ['admin' => true, 'users' => $users]);
+        $admin = true;
+        return view('manage-users', ['admin' => $admin, 'users' => $users]);
     }
 
     public function delete($id)
