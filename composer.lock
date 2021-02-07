@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9bec1bc985b93e280fee78eb259bf954",
+    "content-hash": "0f04092bfcf176c79431c2e5e42fe0be",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1379,107 +1379,6 @@
                 }
             ],
             "time": "2021-01-18T20:58:21+00:00"
-        },
-        {
-            "name": "longman/telegram-bot",
-            "version": "0.70.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-telegram-bot/core.git",
-                "reference": "2093cffa2a8e0497d12183178e17cadcc1d0f6d5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-telegram-bot/core/zipball/2093cffa2a8e0497d12183178e17cadcc1d0f6d5",
-                "reference": "2093cffa2a8e0497d12183178e17cadcc1d0f6d5",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "ext-pdo": "*",
-                "guzzlehttp/guzzle": "^6.0|^7.0",
-                "php": "^7.3|^8.0",
-                "psr/log": "^1.1"
-            },
-            "require-dev": {
-                "dms/phpunit-arraysubset-asserts": "^0.2",
-                "monolog/monolog": "^2.1",
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Longman\\TelegramBot\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Avtandil Kikabidze aka LONGMAN",
-                    "email": "akalongman@gmail.com",
-                    "homepage": "http://longman.me",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Armando Lüscher",
-                    "email": "armando@noplanman.ch",
-                    "homepage": "https://noplanman.ch",
-                    "role": "Developer"
-                },
-                {
-                    "name": "PHP Telegram Bot Team",
-                    "homepage": "https://github.com/php-telegram-bot/core/graphs/contributors",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP Telegram bot",
-            "homepage": "https://github.com/php-telegram-bot/core",
-            "keywords": [
-                "api",
-                "bot",
-                "telegram"
-            ],
-            "support": {
-                "issues": "https://github.com/php-telegram-bot/core/issues",
-                "source": "https://github.com/php-telegram-bot/core"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/php-telegram-bot/core#donate",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/noplanman",
-                    "type": "github"
-                },
-                {
-                    "url": "https://ko-fi.com/phptelegrambot",
-                    "type": "ko_fi"
-                },
-                {
-                    "url": "https://liberapay.com/PHP-Telegram-Bot",
-                    "type": "liberapay"
-                },
-                {
-                    "url": "https://opencollective.com/php-telegram-bot",
-                    "type": "open_collective"
-                },
-                {
-                    "url": "https://www.patreon.com/phptelegrambot",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/longman/telegram-bot",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-12-25T20:07:09+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4703,6 +4602,66 @@
                 }
             ],
             "time": "2021-01-27T10:15:41+00:00"
+        },
+        {
+            "name": "telegram-bot/api",
+            "version": "v2.3.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TelegramBot/Api.git",
+                "reference": "dafad7c9d5468c07f9bbb06c3f358b4b4d842848"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TelegramBot/Api/zipball/dafad7c9d5468c07f9bbb06c3f358b4b4d842848",
+                "reference": "dafad7c9d5468c07f9bbb06c3f358b4b4d842848",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "*",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TelegramBot\\Api\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ilya Gusev",
+                    "email": "mail@igusev.ru",
+                    "homepage": "https://php-cat.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Wrapper for Telegram Bot API",
+            "homepage": "https://github.com/TelegramBot/Api",
+            "keywords": [
+                "bot",
+                "bot api",
+                "php",
+                "telegram"
+            ],
+            "support": {
+                "issues": "https://github.com/TelegramBot/Api/issues",
+                "source": "https://github.com/TelegramBot/Api/tree/v2.3.21"
+            },
+            "time": "2021-01-23T16:46:24+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

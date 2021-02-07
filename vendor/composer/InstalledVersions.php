@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'b68dd3406a684a96198bace2d6501a68f5434b91',
+    'reference' => 'ce64156aae33e7898fc58b34ea865f704b23bf65',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -467,7 +467,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'b68dd3406a684a96198bace2d6501a68f5434b91',
+      'reference' => 'ce64156aae33e7898fc58b34ea865f704b23bf65',
     ),
     'laravel/sail' => 
     array (
@@ -513,15 +513,6 @@ private static $installed = array (
       array (
       ),
       'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
-    ),
-    'longman/telegram-bot' => 
-    array (
-      'pretty_version' => '0.70.1',
-      'version' => '0.70.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '2093cffa2a8e0497d12183178e17cadcc1d0f6d5',
     ),
     'mockery/mockery' => 
     array (
@@ -1256,6 +1247,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '72ca213014a92223a5d18651ce79ef441c12b694',
+    ),
+    'telegram-bot/api' => 
+    array (
+      'pretty_version' => 'v2.3.21',
+      'version' => '2.3.21.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'dafad7c9d5468c07f9bbb06c3f358b4b4d842848',
     ),
     'theseer/tokenizer' => 
     array (
