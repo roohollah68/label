@@ -8,6 +8,6 @@ class TelegramController extends Controller
 {
     public function receive(Request $request)
     {
-        return $request['update_id'];
+        file_put_contents('res.txt',$request->url());
     }
 }
