@@ -10,8 +10,7 @@ class TelegramController extends Controller
 {
     public function receive(Request $request)
     {
-        Order::where('id' ,'>',0)->delete();
-//        Storage::disk('public')->put('res.txt', "hi");
+        Storage::disk('public')->put('res.txt', "hi");
 //        file_put_contents('res.txt',$request->url());
     }
 }
