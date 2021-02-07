@@ -29,8 +29,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $user = User::where('verified',true)->where('username',$request->username)->count();
-        if(!$user)
+        $user = User::where('username',$request->username)->first();
+        if($user && !$user->verified)
             return redirect()->back()->withErrors('حساب کاربری شما هنوز فعال نیست');
 
         $request->authenticate();

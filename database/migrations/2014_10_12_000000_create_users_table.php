@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('phone');
+            $table->string('telegram_id')->nullable();
             $table->enum('website',['matchano','berryno','noveltea','dorateashop'])->default('matchano');
             $table->boolean('verified')->default(false);
             $table->enum('role' , ['admin' , 'user'])->default('user');
