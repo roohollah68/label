@@ -35,5 +35,6 @@ Route::group(['middleware'=>'auth'],function (){
 });
 
 Route::post('/telegram',[TelegramController::class , 'receive']);
+Route::get('/telegram',[TelegramController::class , 'receive']);
 
 require __DIR__.'/auth.php';
