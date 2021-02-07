@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '4bdf1534483f7800769688d143cb167a30f9e03e',
+    'reference' => 'b68dd3406a684a96198bace2d6501a68f5434b91',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -454,7 +454,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '4bdf1534483f7800769688d143cb167a30f9e03e',
+      'reference' => 'b68dd3406a684a96198bace2d6501a68f5434b91',
     ),
     'laravel/sail' => 
     array (
@@ -500,6 +500,15 @@
       array (
       ),
       'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
+    ),
+    'longman/telegram-bot' => 
+    array (
+      'pretty_version' => '0.70.1',
+      'version' => '0.70.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2093cffa2a8e0497d12183178e17cadcc1d0f6d5',
     ),
     'mockery/mockery' => 
     array (
