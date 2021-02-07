@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Keyboards\Keyboard;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -43,10 +44,7 @@ class TelegramController extends Controller
                 }
             }else {
                 $message = 'شما هنوز احراز هویت نشده اید. برای احراز هویت شماره تلگرام باید با شماره سامانه یکی باشد. در این صورت با زدن دکمه "ارسال شماره تماس" شماره خود را بفرستید.';
-                $keyboard = new RKM([[[
-                    "text" => "ارسال شماره تماس",
-                    "request_contact" => true
-                ]]]);
+                $keyboard = new RKM(Keyboard::$request_phone);
                 $bot->sendMessage($chat_id, $message, null, false, null, $keyboard);
             }
         }
