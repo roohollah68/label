@@ -4,20 +4,11 @@ use App\Http\Controllers\DeleteOrderController;
 use App\Http\Controllers\EditOrderController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\NewOrderController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShowOrderController;
+use App\Http\Controllers\TelegramController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 Route::group(['middleware'=>'auth'],function (){
 
     Route::get('add_order',[NewOrderController::class , 'showForm'])->name('newOrder');
@@ -42,5 +33,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('/edit_user/{id}',[ManageUserController::class , 'update']);
 
 });
+
+Route::post('/telegram',[TelegramController::class , 'receive']);
 
 require __DIR__.'/auth.php';
