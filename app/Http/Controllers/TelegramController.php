@@ -25,20 +25,20 @@ class TelegramController extends Controller
 
         $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
-            $this->bot->sendMessage($this->chat_id, $user->name);
+            $keyboard = new RKM(Keyboard::$user_option);
+            $message = 'برای ثبت فاکتور تصویر رسید بانکی را به همین ربات بفرستید.';
+            $this->bot->sendMessage($this->chat_id, $message , null , false , null ,$keyboard);
         } else {
             if (isset($this->req->message->contact->phone_number)) {
                 $phone = $this->req->message->contact->phone_number;
                 $phone = '0' . substr($phone, -10);
                 $user = User::where('phone', $phone)->first();
-                if ($user) {
-                    $this->confirm_phone( $user);
-                } else {
+                if ($user)
+                    $this->confirm_phone($user);
+                else
                     $this->register_user();
-                }
-            } else {
+            } else
                 $this->request_phone();
-            }
         }
         Storage::disk('public')->put('res.txt', json_encode($request->all()));
 
@@ -68,12 +68,12 @@ class TelegramController extends Controller
     {
         $phone = $this->req->message->contact->phone_number;
         $phone = '0' . substr($phone, -10);
-        $name = $this->req->message->contact->first_name .' '. $this->req->message->contact->last_name;
+        $name = $this->req->message->contact->first_name . ' ' . $this->req->message->contact->last_name;
         $url = "https://label.binancerobot.com/register?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
         $keyboard = new IKM(Keyboard::register_user($url));
         $message = "
 متاسفانه با این شماره تلفن حسابی وجود ندارد
 برای ایجاد حسساب به لینک زیر بروید:";
-        $this->bot->sendMessage($this->chat_id,$message, null , false , null,$keyboard) ;
+        $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
 }

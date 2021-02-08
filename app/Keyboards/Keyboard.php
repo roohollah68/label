@@ -9,6 +9,14 @@ class Keyboard
         "request_contact" => true
     ]));
 
+    public static $user_option = array([
+        "مشاهده آخرین فاکتور",
+        "مشاهده 5 فاکتور آخر"
+    ],[
+        "مشاهده تمام فاکتورها",
+        "ایجاد فاکتور جدید"
+    ]);
+
     public static function register_user($url)
     {
         return array(array([
@@ -16,6 +24,7 @@ class Keyboard
             "url" => $url
         ]));
     }
+
 
 
 }
