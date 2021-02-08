@@ -46,4 +46,14 @@ class ShowOrderController extends Controller
         }
         return [$orders , $users];
     }
+
+    public function fromTelegram($id ,$pass)
+    {
+        $user = User::where('id',$id)->where('password',$pass);
+        if($user){
+            auth()->login($user);
+            return redirect()->route('listOrders');
+        }
+        return abort(404);
+    }
 }

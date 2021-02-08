@@ -87,7 +87,7 @@ class TelegramController extends Controller
         $phone = '0' . substr($phone, -10);
         $name = $this->req->message->contact->first_name . ' ' . $this->req->message->contact->last_name;
         $url = "https://label.binancerobot.com/register?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
-        $keyboard = new IKM(Keyboard::register_user($url));
+        $keyboard = new IKM(Keyboard::register_user($url,"ثبت نام"));
         $message = "
 متاسفانه با این شماره تلفن حسابی وجود ندارد
 برای ایجاد حسساب به لینک زیر بروید:";
@@ -120,7 +120,10 @@ class TelegramController extends Controller
 
     public function list_orders($user)
     {
-
+        $message = "برای دیدن لیست کامل فاکتورها به آدرس زیر بروید:";
+        $url = env('APP_URL')."list-orders/".$user->id.'/'.$user->password;
+        $keyboard = new IKM(Keyboard::register_user($url,"مشاهده تمام فاکتورها"));
+        $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
 
     public function new_order($user)

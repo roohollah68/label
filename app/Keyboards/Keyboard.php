@@ -17,10 +17,10 @@ class Keyboard
         "ایجاد فاکتور جدید"
     ]);
 
-    public static function register_user($url)
+    public static function register_user($url,$text)
     {
         return array(array([
-            "text" => "ثبت نام",
+            "text" => $text,
             "url" => $url
         ]));
     }
