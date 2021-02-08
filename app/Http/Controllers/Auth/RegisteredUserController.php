@@ -17,9 +17,10 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('auth.register');
+        $req = $request->all();
+        return view('auth.register',['req'=>$req]);
     }
 
     /**

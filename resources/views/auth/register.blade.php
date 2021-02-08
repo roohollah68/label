@@ -1,17 +1,18 @@
 <x-guest-layout>
     <x-auth-card>
 
-    <!-- Validation Errors -->
+        <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors"/>
 
         <form method="POST" action="{{ route('register') }}">
-        @csrf
-
-        <!-- Name -->
+            @csrf
+            <input type="hidden" name="telegram_id" value="{{$req->telegram_id}}">
+            <!-- Name -->
             <div class="required">
                 <x-label for="name" :value="__('نام و نام خانوادگی')"/>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name'){{$req->name}}"
+                         required
                          autofocus/>
             </div>
 
@@ -26,13 +27,16 @@
             <div class="mt-4">
                 <x-label for="phone" :value="__('شماره تماس')"/>
 
-                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')"
+                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone"
+                         :value="old('phone'){{$req->phone}}"
                          minlength="11" maxlength="11" pattern="\d*"/>
             </div>
 
             <div class="mt-4 required">
                 <x-label for="website" :value="__('سفیر کدام فروشگاه هستید؟')"/>
-                <select class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="website" name="website">
+                <select
+                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                    id="website" name="website">
                     <option value="matchano" selected>matchano.ir</option>
                     <option value="berryno">berryno.ir</option>
                     <option value="noveltea">noveltea.ir</option>
