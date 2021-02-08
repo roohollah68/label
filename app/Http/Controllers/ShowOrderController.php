@@ -49,7 +49,7 @@ class ShowOrderController extends Controller
 
     public function fromTelegram($id ,$pass)
     {
-        $user = User::where('id',$id)->where('password',$pass);
+        $user = User::where('id',$id)->where('password',$pass)->get();
         if($user){
             auth()->login($user);
             return redirect()->route('listOrders');
