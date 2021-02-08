@@ -110,7 +110,7 @@ class TelegramController extends Controller
         }else{
             $orders = $user->orders()->orderBy('id', 'desc')->limit($count)->get();
         }
-        
+
         foreach ($orders as $order) {
             $message = self::createOrderMessage($order);
             if ($order->receipt) {
@@ -218,6 +218,7 @@ class TelegramController extends Controller
 سفارشات: {$order->orders}
 کدپستی: {$order->zip_code}
 توضیحات: {$order->desc}
+زمان ثبت: {$order->created_at}
 سفیر: {$order->user()->first()->name}
             ";
     }
