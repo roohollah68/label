@@ -29,9 +29,8 @@ class TelegramController extends Controller
             $message = 'برای ثبت فاکتور تصویر رسید بانکی را به همین ربات بفرستید.';
             $type = $this->detect_type();
             if ($type == 'text'){
-                $message = $this->req->message->text;
-                $message = Keyboard::$user_option[0][1];
-                if($message == Keyboard::$user_option[0][0])
+                $text = $this->req->message->text;
+                if($text == Keyboard::$user_option[0][0])
                     $message = Keyboard::$user_option[1][1];
             }
             if($type == 'photo'){
