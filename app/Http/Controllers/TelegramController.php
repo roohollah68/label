@@ -40,7 +40,8 @@ class TelegramController extends Controller
                     $this->new_order($user);
             }
             if($type == 'photo'){
-
+                $file_id = end($this->req->message->photo)->file_id;
+                $this->bot->sendPhoto($this->chat_id,$file_id);
             }
 
 
