@@ -157,7 +157,7 @@ class TelegramController extends Controller
     {
         $bot = new BotApi(env('TelegramToken'));
         if (!$user)
-            $user = $order->user();
+            $user = $order->user()->first();
         $message = self::createOrderMessage($order);
         if($user->telegram_id) {
             if ($order->receipt) {
@@ -190,7 +190,6 @@ class TelegramController extends Controller
     public static function sendOrderToTelegramAdmins($order)
     {
         $bot = new BotApi(env('TelegramToken'));
-        $safir = $order->user();
         $users = User::where('role', 'admin')->get();
         $message = self::createOrderMessage($order);
         foreach ($users as $user) {
@@ -214,7 +213,7 @@ class TelegramController extends Controller
 سفارشات: {$order->orders}
 کدپستی: {$order->zip_code}
 توضیحات: {$order->desc}
-سفیر: {$order->user()->name}
+سفیر: {$order->user()->first()->name}
             ";
     }
 }

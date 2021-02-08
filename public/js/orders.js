@@ -72,7 +72,7 @@ function prepare_data() {
                     <a class="fa fa-edit btn btn-primary" href="edit_order/${id}" title="ویرایش سفارش"></a>`
             )
             +
-            ` <i class="fa fa-telegram-plane btn btn-info" onclick="sendToTelegram(${id})" title="مشاهده PDF"></i>`+
+            ` <i class="fab fa-telegram-plane btn btn-info" onclick="sendToTelegram(${id})" title="مشاهده PDF"></i>`+
             ` <i class="fa fa-file-pdf btn btn-secondary" onclick="generatePDF(${id})" title="مشاهده PDF"></i>`,
 
             row.address,
