@@ -20,13 +20,20 @@ class RegisteredUserController extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        return view('auth.register',['req'=>$req]);
+        if (!isset($req['name']))
+            $req = [
+                "name" => "",
+                "phone" => "",
+                "telegram_id" => ""
+            ];
+
+        return view('auth.register', ['req' => $req]);
     }
 
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -46,12 +53,15 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'phone' => $request->phone,
             'website' => $request->website,
+            'telegram_id'=>$request->telegram_id,
             'password' => Hash::make($request->password),
         ]);
+        Auth::login($user);
 
         event(new Registered($user));
 
-        return redirect()->route('newUserMessage');
+//        return redirect()->route('newUserMessage');
+        return redirect()->route('listOrders');
     }
 
     public function newUserMessage()

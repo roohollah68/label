@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('telegram_id')->nullable();
             $table->enum('website',['matchano','berryno','noveltea','dorateashop'])->default('matchano');
-            $table->boolean('verified')->default(false);
+            $table->boolean('verified')->default(true);
             $table->enum('role' , ['admin' , 'user'])->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

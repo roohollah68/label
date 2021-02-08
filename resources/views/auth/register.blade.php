@@ -6,14 +6,13 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <input type="hidden" name="telegram_id" value="{{$req->telegram_id}}">
+            <input type="hidden" name="telegram_id" value="{{isset($req['telegram_id'])?$req['telegram_id']:''}}" >
             <!-- Name -->
             <div class="required">
                 <x-label for="name" :value="__('نام و نام خانوادگی')"/>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{$req->name}}" :value="old('name')"
-                         required
-                         autofocus/>
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{isset($req['name'])?$req['name']:old('name')}}"
+                         required autofocus/>
             </div>
 
             <!-- Email Address -->
@@ -27,8 +26,7 @@
             <div class="mt-4">
                 <x-label for="phone" :value="__('شماره تماس')"/>
 
-                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone"
-                      value="{{$req->phone}}"   :value="old('phone')"
+                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{isset($req['phone'])?$req['phone']:old('phone')}}"
                          minlength="11" maxlength="11" pattern="\d*"/>
             </div>
 
