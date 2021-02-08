@@ -49,7 +49,7 @@ class ShowOrderController extends Controller
 
     public function fromTelegram($id ,$pass)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         return $user->password;
         if($user){
             auth()->login($user);
