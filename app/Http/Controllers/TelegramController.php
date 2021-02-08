@@ -40,11 +40,8 @@ class TelegramController extends Controller
                     $this->new_order($user);
             }
             if($type == 'photo'){
-                $file_id = end($this->req->message->photo)->file_id;
-                $caption = "برای ثبت فاکتور مربوط به این رسید روی لینک زیر کلیک کنید";
-                $url = env('APP_URL')."new-order-receipt/{$user->id}/{$user->password}/{$file_id}";
-                $keyboard = new IKM(Keyboard::register_user($url,"ثبت فاکتور مربوط به این رسید"));
-                $this->bot->sendPhoto($this->chat_id,$file_id,$caption,$this->req->message->message_id,$keyboard);
+                $this->new_order_receipt($user);
+
             }
 
 
@@ -136,6 +133,15 @@ class TelegramController extends Controller
         $url = env('APP_URL')."new-order/{$user->id}/{$user->password}";
         $keyboard = new IKM(Keyboard::register_user($url,"ثبت فاکتور جدید"));
         $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
+    }
+
+    public function new_order_receipt($user)
+    {
+        $file_id = end($this->req->message->photo)->file_id;
+        $caption = "برای ثبت فاکتور مربوط به این رسید روی لینک زیر کلیک کنید";
+        $url = env('APP_URL')."new-order-receipt/{$user->id}/{$user->password}/{$file_id}";
+        $keyboard = new IKM(Keyboard::register_user($url,"ثبت فاکتور مربوط به این رسید"));
+        $this->bot->sendPhoto($this->chat_id,$file_id,$caption,$this->req->message->message_id,$keyboard);
     }
 
     public static function savePhoto($file_id){
