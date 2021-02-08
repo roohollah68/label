@@ -26,18 +26,18 @@ class TelegramController extends Controller
         $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
             $keyboard = new RKM(Keyboard::$user_option);
+            $message = 'برای ثبت فاکتور تصویر رسید بانکی را به همین ربات بفرستید.';
             $type = $this->detect_type();
             if ($type == 'text'){
                 $message = $this->req->message->text;
                 if($message == Keyboard::$user_option[0][0][0])
-                    $message == Keyboard::$user_option[0][0][1];
+                    $message = Keyboard::$user_option[0][0][1];
             }
             if($type == 'photo'){
 
             }
 
 
-            $message = 'برای ثبت فاکتور تصویر رسید بانکی را به همین ربات بفرستید.';
             $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
         } else {
             if (isset($this->req->message->contact->phone_number)) {
