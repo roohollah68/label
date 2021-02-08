@@ -31,7 +31,13 @@ class TelegramController extends Controller
             if ($type == 'text'){
                 $text = $this->req->message->text;
                 if($text == Keyboard::$user_option[0][0])
-                    $message = Keyboard::$user_option[1][1];
+                    $this->see_orders(1,$user);
+                if($text == Keyboard::$user_option[0][1])
+                    $this->see_orders(5,$user);
+                if($text == Keyboard::$user_option[1][0])
+                    $this->list_orders($user);
+                if($text == Keyboard::$user_option[1][1])
+                    $this->new_order($user);
             }
             if($type == 'photo'){
 
@@ -94,5 +100,31 @@ class TelegramController extends Controller
             return 'text';
         if (isset($this->req->message->photo))
             return 'photo';
+    }
+
+    public function see_orders($count , $user)
+    {
+        $orders = $user->orders()->orderBy('id', 'desc')->limit($count)->get();
+        foreach ($orders as $order){
+            $message = "
+نام و نام خانوادگی: {$order->name}
+شماره همراه: {$order->phone}
+آدرس: {$order->address}
+سفارشات: {$order->orders}
+کدپستی: {$order->zip_code}
+توضیحات: {$order->desc}
+            ";
+            $this->bot->sendMessage($this->chat_id, $message);
+        }
+    }
+
+    public function list_orders($user)
+    {
+
+    }
+
+    public function new_order($user)
+    {
+
     }
 }
