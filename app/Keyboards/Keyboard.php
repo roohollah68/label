@@ -8,4 +8,14 @@ class Keyboard
         "text" => "ارسال شماره تماس",
         "request_contact" => true
     ]));
+
+    public static function register_user($url)
+    {
+        return array(array([
+            "text" => "ثبت نام",
+            "url" => $url
+        ]));
+    }
+
+
 }

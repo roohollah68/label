@@ -12,44 +12,68 @@ use TelegramBot\Api\Types\ReplyKeyboardMarkup as RKM;
 
 class TelegramController extends Controller
 {
+    public $bot;
+    public $chat_id;
+    public $req;
 
     public function receive(Request $request)
     {
-        $req = json_decode(file_get_contents('php://input'));
-        $chat_id = $req->message->from->id;
-//        $chat_id = '90123252';
-        $token = "1435869411:AAHZuaPosKamd2F0CtSt_v_DOM5xPN_WfP4";
-        $bot = new BotApi($token);
+        $this->req = json_decode(file_get_contents('php://input'));
+        $this->chat_id = $this->req->message->from->id;
+        $token = '1435869411:AAHZuaPosKamd2F0CtSt_v_DOM5xPN_WfP4';
+        $this->bot = new BotApi($token);
 
-        $user = User::where('telegram_id', $chat_id)->first();
+        $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
-
+            $this->bot->sendMessage($this->chat_id, $user->name);
         } else {
-            if(isset($req->message->contact->phone_number)){
-                $phone = $req->message->contact->phone_number;
-                $phone = '0'.substr($phone , -10);
+            if (isset($this->req->message->contact->phone_number)) {
+                $phone = $this->req->message->contact->phone_number;
+                $phone = '0' . substr($phone, -10);
                 $user = User::where('phone', $phone)->first();
-                if($user){
-                    $user->update(['telegram_id'=>$chat_id]);
-                    $message = "
-تبریک حساب شما با موفقیت متصل شد
-اطلاعات ثبت شده از شما:
-نام و نام خانوادگی: {$user->name}
-نام کاربری: {$user->username}
-";
-                    $bot->sendMessage($chat_id,$message);
-                }else{
-                    $message = "متاسفانه با این شماره تلفن حسابی وجود ندارد";
-                    $bot->sendMessage($chat_id,$message);
+                if ($user) {
+                    $this->confirm_phone( $user);
+                } else {
+                    $this->register_user();
                 }
-            }else {
-                $message = 'شما هنوز احراز هویت نشده اید. برای احراز هویت شماره تلگرام باید با شماره سامانه یکی باشد. در این صورت با زدن دکمه "ارسال شماره تماس" شماره خود را بفرستید.';
-                $keyboard = new RKM(Keyboard::$request_phone);
-                $bot->sendMessage($chat_id, $message, null, false, null, $keyboard);
+            } else {
+                $this->request_phone();
             }
         }
         Storage::disk('public')->put('res.txt', json_encode($request->all()));
 
     }
 
+    public function request_phone()
+    {
+        $message = 'شما هنوز احراز هویت نشده اید. برای احراز هویت شماره تلگرام باید با شماره سامانه یکی باشد. در این صورت با زدن دکمه "ارسال شماره تماس" شماره خود را بفرستید.';
+        $keyboard = new RKM(Keyboard::$request_phone);
+        $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
+    }
+
+    public function confirm_phone($user)
+    {
+        $user->update(['telegram_id' => $this->chat_id]);
+        $message = "
+تبریک حساب شما با موفقیت متصل شد
+اطلاعات ثبت شده از شما:
+نام و نام خانوادگی: {$user->name}
+نام کاربری: {$user->username}
+";
+        $this->bot->sendMessage($this->chat_id, $message);
+
+    }
+
+    public function register_user()
+    {
+        $phone = $this->req->message->contact->phone_number;
+        $phone = '0' . substr($phone, -10);
+        $name = $this->req->message->contact->first_name .' '. $this->req->message->contact->last_name;
+        $url = "https://label.binancerobot.com/register?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
+        $keyboard = new IKM(Keyboard::register_user($url));
+        $message = "
+متاسفانه با این شماره تلفن حسابی وجود ندارد
+برای ایجاد حسساب به لینک زیر بروید:";
+        $this->bot->sendMessage($this->chat_id,$message, null , false , null,$keyboard) ;
+    }
 }
