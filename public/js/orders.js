@@ -324,5 +324,8 @@ function fix_persian(text) {
 }
 
 function sendToTelegram(id){
-
+    $.post('send_to_telegram/' + id, {_token: token})
+        .done(res => {
+            $.notify(res, 'info');
+        })
 }

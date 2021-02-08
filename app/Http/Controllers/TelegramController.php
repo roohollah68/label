@@ -181,7 +181,10 @@ class TelegramController extends Controller
             } else {
                 $bot->sendMessage($user->telegram_id, $message);
             }
+            return "با موفقیت برای تلگرام شما ارسال شد";
         }
+        return "حساب تلگرام شما ثبت نشده است.";
+
     }
 
     public static function sendOrderToTelegramAdmins($order)
