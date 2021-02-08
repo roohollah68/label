@@ -36,7 +36,7 @@ Route::group(['middleware'=>'auth'],function (){
 
 Route::post('/telegram',[TelegramController::class , 'receive']);
 
-Route::get('list_orders/{id}/{pass}',[ShowOrderController::class , 'fromTelegram']);
+Route::get('list-orders/{id}/{pass}',[ShowOrderController::class , 'fromTelegram']);
 
 
 require __DIR__.'/auth.php';
