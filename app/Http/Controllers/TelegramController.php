@@ -21,10 +21,8 @@ class TelegramController extends Controller
     {
         $this->req = json_decode(file_get_contents('php://input'));
         $this->chat_id = $this->req->message->from->id;
+//        $this->chat_id = '1353363738';
         $this->bot = new BotApi(env('TelegramToken'));
-//        $this->bot = new BotApi('1435869411:AAHZuaPosKamd2F0CtSt_v_DOM5xPN_WfP4');
-        $this->bot->sendMessage($this->chat_id, 'hi');
-        die();
         $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
             $keyboard = new RKM(Keyboard::$user_option);
