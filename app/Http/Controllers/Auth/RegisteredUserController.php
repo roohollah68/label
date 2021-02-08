@@ -44,6 +44,7 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|min:5|unique:users',
             'phone' => 'required|digits:11|unique:users',
+            'telegram_id'=>'numeric|unique:users',
             'website' => 'required',
             'password' => 'required|string|confirmed|min:8',
         ]);
