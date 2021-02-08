@@ -36,14 +36,19 @@
                     </div>
                 </div>
             @endforeach
-            <div class="col-md-6">
-                <div class="form-group input-group ">
-                    <div class="input-group-append" style="width: 160px">
-                        <label for="receipt" class="input-group-text w-100">تصویر رسید بانکی:</label>
+            @if(isset($req['file']))
+                    <a href="/receipt/{{$req['file']}}.jpg" target="_blank"><img style="width: 300px" src="/receipt/{{$req['file']}}.jpg"></a>
+                <input type="hidden" name="file" value="{{$req['file']}}.jpg">
+                @else
+                    <div class="col-md-6">
+                        <div class="form-group input-group ">
+                            <div class="input-group-append" style="width: 160px">
+                                <label for="receipt" class="input-group-text w-100">تصویر رسید بانکی:</label>
+                            </div>
+                            <input type="file" id="receipt" class="" name="receipt">
+                        </div>
                     </div>
-                    <input type="file" id="receipt" class="" name="receipt">
-                </div>
-            </div>
+                @endif
 
         </div>
         <input type="submit" class="btn btn-success" value="ذخیره">&nbsp;

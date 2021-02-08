@@ -16,12 +16,12 @@ class TelegramController extends Controller
     public $chat_id;
     public $req;
 
+
     public function receive(Request $request)
     {
         $this->req = json_decode(file_get_contents('php://input'));
         $this->chat_id = $this->req->message->from->id;
-        $token = '1435869411:AAHZuaPosKamd2F0CtSt_v_DOM5xPN_WfP4';
-        $this->bot = new BotApi($token);
+        $this->bot = new BotApi(env('TelegramToken'));
 
         $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
@@ -41,7 +41,10 @@ class TelegramController extends Controller
             }
             if($type == 'photo'){
                 $file_id = end($this->req->message->photo)->file_id;
-                $this->bot->sendPhoto($this->chat_id,$file_id);
+                $caption = "برای ثبت فاکتور مربوط به این رسید روی لینک زیر کلیک کنید";
+                $url = env('APP_URL')."new-order-receipt/{$user->id}/{$user->password}/{$file_id}";
+                $keyboard = new RKM(Keyboard::register_user($url,"ثبت فاکتور مربوط به این رسید"));
+                $this->bot->sendPhoto($this->chat_id,$file_id,$caption,null,$keyboard);
             }
 
 
@@ -87,7 +90,7 @@ class TelegramController extends Controller
         $phone = $this->req->message->contact->phone_number;
         $phone = '0' . substr($phone, -10);
         $name = $this->req->message->contact->first_name . ' ' . $this->req->message->contact->last_name;
-        $url = "https://label.binancerobot.com/register?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
+        $url = env('APP_URL')."register?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
         $keyboard = new IKM(Keyboard::register_user($url,"ثبت نام"));
         $message = "
 متاسفانه با این شماره تلفن حسابی وجود ندارد
@@ -122,7 +125,7 @@ class TelegramController extends Controller
     public function list_orders($user)
     {
         $message = "برای دیدن لیست کامل فاکتورها به آدرس زیر بروید:";
-        $url = env('APP_URL')."list-orders/".$user->id.'/'.$user->password;
+        $url = env('APP_URL')."list-orders/{$user->id}/{$user->password}";
         $keyboard = new IKM(Keyboard::register_user($url,"مشاهده تمام فاکتورها"));
         $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
@@ -130,8 +133,15 @@ class TelegramController extends Controller
     public function new_order($user)
     {
         $message = "برای ثبت فاکتور جدید به آدرس زیر بروید:";
-        $url = env('APP_URL')."new-order/".$user->id.'/'.$user->password;
+        $url = env('APP_URL')."new-order/{$user->id}/{$user->password}";
         $keyboard = new IKM(Keyboard::register_user($url,"ثبت فاکتور جدید"));
         $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
+    }
+
+    public static function savePhoto($file_id){
+        $bot = new BotApi(env('TelegramToken'));
+        $file = $bot->downloadFile($file_id);
+        Storage::disk('public')->put($file_id.'.jpg' ,$file);
+        return true;
     }
 }

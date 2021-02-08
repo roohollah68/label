@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class NewOrderController extends Controller
 {
-    public function showForm()
+    public function showForm(Request $request)
     {
         if (auth()->user()->role == 'admin') {
             $admin = true;
         } else {
             $admin = false;
         }
-        return view('addForm',['admin'=>$admin]);
+        return view('addForm',['admin'=>$admin , 'req'=>$request->all()]);
     }
 
     public function insertOrder(Request $request)
@@ -25,6 +25,8 @@ class NewOrderController extends Controller
         ]);
         if($request->file("receipt")){
             $request->receipt = $request->file("receipt")->store("",'public');
+        }elseif ($request->file){
+            $request->receipt = $request->file;
         }
         auth()->user()->orders()->create([
             'name'=> $request->name,
@@ -44,6 +46,17 @@ class NewOrderController extends Controller
         if($user->password == $pass){
             auth()->login($user);
             return redirect()->route('newOrder');
+        }
+        return abort(404);
+    }
+
+    public function fromTelegramWithPhoto($id ,$pass ,$file_id)
+    {
+        $user = User::findOrFail($id);
+        if($user->password == $pass){
+            auth()->login($user);
+            if(TelegramController::savePhoto($file_id))
+                return redirect("add_order?file=$file_id");
         }
         return abort(404);
     }
