@@ -15,47 +15,50 @@ class NewOrderController extends Controller
         } else {
             $admin = false;
         }
-        return view('addForm',['admin'=>$admin , 'req'=>$request->all()]);
+        return view('addForm', ['admin' => $admin, 'req' => $request->all()]);
     }
 
     public function insertOrder(Request $request)
     {
         request()->validate([
-            'receipt'  => 'mimes:jpeg,jpg,png,bmp|max:2048',
+            'receipt' => 'mimes:jpeg,jpg,png,bmp|max:2048',
         ]);
-        if($request->file("receipt")){
-            $request->receipt = $request->file("receipt")->store("",'public');
-        }elseif ($request->file){
+        if ($request->file("receipt")) {
+            $request->receipt = $request->file("receipt")->store("", 'public');
+        } elseif ($request->file) {
             $request->receipt = $request->file;
         }
         auth()->user()->orders()->create([
-            'name'=> $request->name,
-            'phone'=> $request->phone,
-            'address'=> $request->address,
-            'zip_code'=> $request->zip_code,
-            'orders'=> $request->orders,
-            'desc'=> $request->desc,
-            'receipt'=> $request->receipt,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'zip_code' => $request->zip_code,
+            'orders' => $request->orders,
+            'desc' => $request->desc,
+            'receipt' => $request->receipt,
         ]);
         return redirect()->route('listOrders');
     }
 
-    public function fromTelegram($id ,$pass)
+    public function fromTelegram($id, $pass)
     {
         $user = User::findOrFail($id);
-        if($user->password == $pass){
+        if ($user->password == $pass) {
             auth()->login($user);
             return redirect()->route('newOrder');
         }
         return abort(404);
     }
 
-    public function fromTelegramWithPhoto($id ,$pass ,$file_id)
+    public function fromTelegramWithPhoto($id, $pass, $file_id)
     {
         $user = User::findOrFail($id);
-        if($user->password == $pass){
+        if ($user->password == $pass) {
             auth()->login($user);
-            if(TelegramController::savePhoto($file_id))
+            $order = $user->orders->where('receipt', $file_id . '.jpg')->first();
+            if ($order)
+                return redirect("edit_order/{$order->id}");
+            elseif (TelegramController::savePhoto($file_id))
                 return redirect("add_order?file=$file_id");
         }
         return abort(404);

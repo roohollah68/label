@@ -151,6 +151,9 @@ class TelegramController extends Controller
     }
 
     public static function savePhoto($file_id){
+        if (Storage::disk('public')->exists("$file_id.jpg")) {
+            return true;
+        }
         $bot = new BotApi(env('TelegramToken'));
         $file = $bot->downloadFile($file_id);
         Storage::disk('public')->put($file_id.'.jpg' ,$file);
