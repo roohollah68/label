@@ -107,6 +107,7 @@ class TelegramController extends Controller
     {
         $orders = $user->orders()->orderBy('id', 'desc')->limit($count)->get();
         foreach ($orders as $order){
+
             $message = "
 نام و نام خانوادگی: {$order->name}
 شماره همراه: {$order->phone}
@@ -115,7 +116,12 @@ class TelegramController extends Controller
 کدپستی: {$order->zip_code}
 توضیحات: {$order->desc}
             ";
-            $this->bot->sendMessage($this->chat_id, $message);
+            if($order->receipt){
+                $this->bot->sendPhoto($this->chat_id , env('APP_URL')."receipt/{$order->receipt}",$message);
+            }else{
+                $this->bot->sendMessage($this->chat_id, $message);
+            }
+
         }
     }
 
