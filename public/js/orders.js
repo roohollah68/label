@@ -41,9 +41,6 @@ function prepare_data() {
             return
         if (deleted ^ !!row.deleted_at)
             return
-        // console.log(deleted)
-        // console.log(row.deleted_at)
-        // console.log(deleted ^ !!row.deleted_at)
 
         counter++;
         res.push([
@@ -75,6 +72,7 @@ function prepare_data() {
                     <a class="fa fa-edit btn btn-primary" href="edit_order/${id}" title="ویرایش سفارش"></a>`
             )
             +
+            ` <i class="fa fa-telegram-plane btn btn-info" onclick="sendToTelegram(${id})" title="مشاهده PDF"></i>`+
             ` <i class="fa fa-file-pdf btn btn-secondary" onclick="generatePDF(${id})" title="مشاهده PDF"></i>`,
 
             row.address,
@@ -323,4 +321,8 @@ function fix_persian(text) {
         text = text.split(symbol).join("</b>" + symbol + "<b>")
     })
     return text
+}
+
+function sendToTelegram(id){
+
 }

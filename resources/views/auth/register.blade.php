@@ -23,7 +23,7 @@
                          required/>
             </div><!-- Email Address -->
 
-            <div class="mt-4">
+            <div class="mt-4 required">
                 <x-label for="phone" :value="__('شماره تماس')"/>
 
                 <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{isset($req['phone'])?$req['phone']:old('phone')}}"

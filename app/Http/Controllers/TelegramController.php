@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Keyboards\Keyboard;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -21,25 +22,24 @@ class TelegramController extends Controller
     {
         $this->req = json_decode(file_get_contents('php://input'));
         $this->chat_id = $this->req->message->from->id;
-//        $this->chat_id = '1353363738';
         $this->bot = new BotApi(env('TelegramToken'));
         $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
             $keyboard = new RKM(Keyboard::$user_option);
             $message = 'برای ثبت فاکتور تصویر رسید بانکی را به همین ربات بفرستید.';
             $type = $this->detect_type();
-            if ($type == 'text'){
+            if ($type == 'text') {
                 $text = $this->req->message->text;
-                if($text == Keyboard::$user_option[0][0])
-                    $this->see_orders(1,$user);
-                if($text == Keyboard::$user_option[0][1])
-                    $this->see_orders(5,$user);
-                if($text == Keyboard::$user_option[1][0])
+                if ($text == Keyboard::$user_option[0][0])
+                    $this->see_orders(1, $user);
+                if ($text == Keyboard::$user_option[0][1])
+                    $this->see_orders(5, $user);
+                if ($text == Keyboard::$user_option[1][0])
                     $this->list_orders($user);
-                if($text == Keyboard::$user_option[1][1])
+                if ($text == Keyboard::$user_option[1][1])
                     $this->new_order($user);
             }
-            if($type == 'photo'){
+            if ($type == 'photo') {
                 $this->new_order_receipt($user);
 
             }
@@ -87,8 +87,8 @@ class TelegramController extends Controller
         $phone = $this->req->message->contact->phone_number;
         $phone = '0' . substr($phone, -10);
         $name = $this->req->message->contact->first_name . ' ' . $this->req->message->contact->last_name;
-        $url = env('APP_URL')."register?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
-        $keyboard = new IKM(Keyboard::register_user($url,"ثبت نام"));
+        $url = env('APP_URL') . "register?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
+        $keyboard = new IKM(Keyboard::register_user($url, "ثبت نام"));
         $message = "
 متاسفانه با این شماره تلفن حسابی وجود ندارد
 برای ایجاد حسساب به لینک زیر بروید:";
@@ -103,22 +103,14 @@ class TelegramController extends Controller
             return 'photo';
     }
 
-    public function see_orders($count , $user)
+    public function see_orders($count, $user)
     {
         $orders = $user->orders()->orderBy('id', 'desc')->limit($count)->get();
-        foreach ($orders as $order){
-
-            $message = "
-نام و نام خانوادگی: {$order->name}
-شماره همراه: {$order->phone}
-آدرس: {$order->address}
-سفارشات: {$order->orders}
-کدپستی: {$order->zip_code}
-توضیحات: {$order->desc}
-            ";
-            if($order->receipt){
-                $this->bot->sendPhoto($this->chat_id , env('APP_URL')."receipt/{$order->receipt}",$message);
-            }else{
+        foreach ($orders as $order) {
+            $message = self::createOrderMessage($order);
+            if ($order->receipt) {
+                $this->bot->sendPhoto($this->chat_id, env('APP_URL') . "receipt/{$order->receipt}", $message);
+            } else {
                 $this->bot->sendMessage($this->chat_id, $message);
             }
 
@@ -128,16 +120,16 @@ class TelegramController extends Controller
     public function list_orders($user)
     {
         $message = "برای دیدن لیست کامل فاکتورها به آدرس زیر بروید:";
-        $url = env('APP_URL')."list-orders/{$user->id}/{$user->password}";
-        $keyboard = new IKM(Keyboard::register_user($url,"مشاهده تمام فاکتورها"));
+        $url = env('APP_URL') . "list-orders/{$user->id}/{$user->password}";
+        $keyboard = new IKM(Keyboard::register_user($url, "مشاهده تمام فاکتورها"));
         $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
 
     public function new_order($user)
     {
         $message = "برای ثبت فاکتور جدید به آدرس زیر بروید:";
-        $url = env('APP_URL')."new-order/{$user->id}/{$user->password}";
-        $keyboard = new IKM(Keyboard::register_user($url,"ثبت فاکتور جدید"));
+        $url = env('APP_URL') . "new-order/{$user->id}/{$user->password}";
+        $keyboard = new IKM(Keyboard::register_user($url, "ثبت فاکتور جدید"));
         $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
 
@@ -145,18 +137,81 @@ class TelegramController extends Controller
     {
         $file_id = end($this->req->message->photo)->file_id;
         $caption = "برای ثبت فاکتور مربوط به این رسید روی لینک زیر کلیک کنید";
-        $url = env('APP_URL')."new-order-receipt/{$user->id}/{$user->password}/{$file_id}";
-        $keyboard = new IKM(Keyboard::register_user($url,"ثبت فاکتور مربوط به این رسید"));
-        $this->bot->sendPhoto($this->chat_id,$file_id,$caption,$this->req->message->message_id,$keyboard);
+        $url = env('APP_URL') . "new-order-receipt/{$user->id}/{$user->password}/{$file_id}";
+        $keyboard = new IKM(Keyboard::register_user($url, "ثبت فاکتور مربوط به این رسید"));
+        $this->bot->sendPhoto($this->chat_id, $file_id, $caption, $this->req->message->message_id, $keyboard);
     }
 
-    public static function savePhoto($file_id){
+    public static function savePhoto($file_id)
+    {
         if (Storage::disk('public')->exists("$file_id.jpg")) {
             return true;
         }
         $bot = new BotApi(env('TelegramToken'));
         $file = $bot->downloadFile($file_id);
-        Storage::disk('public')->put($file_id.'.jpg' ,$file);
+        Storage::disk('public')->put($file_id . '.jpg', $file);
         return true;
+    }
+
+    public static function sendOrderToTelegram($order, $user = null)
+    {
+        $bot = new BotApi(env('TelegramToken'));
+        if (!$user)
+            $user = $order->user();
+        $message = self::createOrderMessage($order);
+        if($user->telegram_id) {
+            if ($order->receipt) {
+                $bot->sendPhoto($user->telegram_id, env('APP_URL') . "receipt/{$order->receipt}", $message);
+            } else {
+                $bot->sendMessage($user->telegram_id, $message);
+            }
+        }
+
+    }
+
+    public static function sendOrderToTelegramById($id)
+    {
+        $order = Order::findOrFail($id);
+        $user = auth()->user();
+        $bot = new BotApi(env('TelegramToken'));
+        $message = self::createOrderMessage($order);
+        if($user->telegram_id) {
+            if ($order->receipt) {
+                $bot->sendPhoto($user->telegram_id, env('APP_URL') . "receipt/{$order->receipt}", $message);
+            } else {
+                $bot->sendMessage($user->telegram_id, $message);
+            }
+        }
+    }
+
+    public static function sendOrderToTelegramAdmins($order)
+    {
+        $bot = new BotApi(env('TelegramToken'));
+        $safir = $order->user();
+        $users = User::where('role', 'admin')->get();
+        $message = self::createOrderMessage($order);
+        foreach ($users as $user) {
+            if ($user->telegram_id) {
+                if ($order->receipt) {
+                    $bot->sendPhoto($user->telegram_id, env('APP_URL') . "receipt/{$order->receipt}", $message);
+                } else {
+                    $bot->sendMessage($user->telegram_id, $message);
+                }
+            }
+        }
+
+    }
+
+    public static function createOrderMessage($order)
+    {
+        return "
+نام و نام خانوادگی: {$order->name}
+شماره همراه: {$order->phone}
+آدرس: {$order->address}
+سفارشات: {$order->orders}
+کدپستی: {$order->zip_code}
+توضیحات: {$order->desc}
+سفیر: {$order->user()->name}
+            ";
     }
 }

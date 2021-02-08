@@ -28,7 +28,7 @@ class NewOrderController extends Controller
         } elseif ($request->file) {
             $request->receipt = $request->file;
         }
-        auth()->user()->orders()->create([
+        $order = auth()->user()->orders()->create([
             'name' => $request->name,
             'phone' => $request->phone,
             'address' => $request->address,
@@ -37,6 +37,8 @@ class NewOrderController extends Controller
             'desc' => $request->desc,
             'receipt' => $request->receipt,
         ]);
+        TelegramController::sendOrderToTelegram($order);
+        TelegramController::sendOrderToTelegramAdmins($order);
         return redirect()->route('listOrders');
     }
 
