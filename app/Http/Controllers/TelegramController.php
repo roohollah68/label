@@ -30,6 +30,7 @@ class TelegramController extends Controller
             $type = $this->detect_type();
             if ($type == 'text'){
                 $message = $this->req->message->text;
+                $message = Keyboard::$user_option[0][0][1];
                 if($message == Keyboard::$user_option[0][0][0])
                     $message = Keyboard::$user_option[0][0][1];
             }
