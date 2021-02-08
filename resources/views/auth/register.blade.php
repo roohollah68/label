@@ -11,7 +11,7 @@
             <div class="required">
                 <x-label for="name" :value="__('نام و نام خانوادگی')"/>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name'){{$req->name}}"
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{$req->name}}" :value="old('name')"
                          required
                          autofocus/>
             </div>
@@ -28,7 +28,7 @@
                 <x-label for="phone" :value="__('شماره تماس')"/>
 
                 <x-input id="phone" class="block mt-1 w-full" type="text" name="phone"
-                         :value="old('phone'){{$req->phone}}"
+                      value="{{$req->phone}}"   :value="old('phone')"
                          minlength="11" maxlength="11" pattern="\d*"/>
             </div>
 
