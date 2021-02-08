@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NewOrderController extends Controller
@@ -35,5 +36,15 @@ class NewOrderController extends Controller
             'receipt'=> $request->receipt,
         ]);
         return redirect()->route('listOrders');
+    }
+
+    public function fromTelegram($id ,$pass)
+    {
+        $user = User::findOrFail($id);
+        if($user->password == $pass){
+            auth()->login($user);
+            return redirect()->route('newOrder');
+        }
+        return abort(404);
     }
 }

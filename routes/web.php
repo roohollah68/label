@@ -38,5 +38,7 @@ Route::post('/telegram',[TelegramController::class , 'receive']);
 
 Route::get('list-orders/{id}/{pass}',[ShowOrderController::class , 'fromTelegram']);
 
+Route::get('new-order/{id}/{pass}',[NewOrderController::class , 'fromTelegram']);
+
 
 require __DIR__.'/auth.php';

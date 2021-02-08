@@ -128,6 +128,9 @@ class TelegramController extends Controller
 
     public function new_order($user)
     {
-
+        $message = "برای ثبت فاکتور جدید به آدرس زیر بروید:";
+        $url = env('APP_URL')."new-order/".$user->id.'/'.$user->password;
+        $keyboard = new IKM(Keyboard::register_user($url,"ثبت فاکتور جدید"));
+        $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
 }
