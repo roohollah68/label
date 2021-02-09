@@ -1,8 +1,6 @@
 <?php
 /* In the name of Allah = بسم اللّه الرّحمن الرّحیم */
 
-use PhpParser\Builder\Class_;
-
 /**
  * @فارسی : توابع زمان و تاریخ هجری شمسی (جلالی) در پی اچ پی
  * @name: Hijri_Shamsi,Solar(Jalali) Date and Time Functions
