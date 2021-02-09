@@ -11,7 +11,7 @@
         </li>
     @else
         <li class="nav-item">
-            <a class="nav-item nav-link" href="{{route('manageUsers')}}">ویرایش حساب کاربری</a>
+            <a class="nav-item nav-link" href="{{route('editUser')}}">ویرایش حساب کاربری</a>
         </li>
     @endif
     <li class="nav-item">
