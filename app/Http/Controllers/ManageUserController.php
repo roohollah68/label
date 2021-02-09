@@ -47,18 +47,20 @@ class ManageUserController extends Controller
         return redirect()->route('manageUsers');
     }
 
-    public function edit($id)
+    public function edit($id = null)
     {
-        if (auth()->user()->role != 'admin')
-            abort(404);
-        $user = User::find( $id);
-        return view('edit-user',['admin' => true,'user'=>$user]);
+        if (auth()->user()->role != 'admin') {
+            $user = auth()->user();
+            return view('edit-user', ['admin' => false, 'user' => $user]);
+        }
+        $user = User::find($id);
+        return view('edit-user', ['admin' => true, 'user' => $user]);
     }
 
     public function update($id, Request $request)
     {
         if (auth()->user()->role != 'admin')
-            abort(404);
+            $id = auth()->user()->id;
         $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|min:5',
@@ -73,7 +75,7 @@ class ManageUserController extends Controller
             'website' => $request->website,
         ]);
 
-        if($request->password) {
+        if ($request->password) {
             $request->validate([
                 'password' => 'required|string|min:8',
             ]);
@@ -81,7 +83,8 @@ class ManageUserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
         }
-
+        if (auth()->user()->role != 'admin')
+            return redirect()->route('listOrders');
         return redirect()->route('manageUsers');
     }
 }

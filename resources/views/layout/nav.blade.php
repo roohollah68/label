@@ -9,6 +9,10 @@
         <li class="nav-item">
             <a class="nav-item nav-link" href="{{route('manageUsers')}}">مدیریت کاربران</a>
         </li>
+    @else
+        <li class="nav-item">
+            <a class="nav-item nav-link" href="{{route('manageUsers')}}">ویرایش حساب کاربری</a>
+        </li>
     @endif
     <li class="nav-item">
         <a class="nav-item nav-link" href="{{route('logout')}}">خروج</a>

@@ -33,6 +33,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/confirm_user/{id}',[ManageUserController::class , 'confirm']);
     Route::get('/suspend_user/{id}',[ManageUserController::class , 'suspend']);
     Route::get('/edit_user/{id}',[ManageUserController::class , 'edit']);
+    Route::get('/edit_user',[ManageUserController::class , 'edit']);
     Route::post('/edit_user/{id}',[ManageUserController::class , 'update']);
 
 });
