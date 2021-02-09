@@ -68,6 +68,7 @@ class RegisteredUserController extends Controller
         $name = $request['name'];
         $phone = $request['phone'];
         $telegram_id = $request['telegram_id'];
+        return redirect()->route('register');
         $this->create($name, $phone, $telegram_id);
     }
 }
