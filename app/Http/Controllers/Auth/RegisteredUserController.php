@@ -45,7 +45,6 @@ class RegisteredUserController extends Controller
             'telegram_id' => 'numeric|unique:users',
             'website' => 'required',
             'password' => 'required|string|confirmed|min:8',
-            'telegram_code' => Str::random(40),
         ]);
 
         $user = User::create([
@@ -55,6 +54,7 @@ class RegisteredUserController extends Controller
             'website' => $request->website,
             'telegram_id' => $request->telegram_id,
             'password' => Hash::make($request->password),
+            'telegram_code' => Str::random(40),
         ]);
         Auth::login($user);
 
