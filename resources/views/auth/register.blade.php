@@ -34,10 +34,10 @@
                 <x-label for="phone" :value="__('شماره تماس')"/>
                 @if($phone)
                     <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{$phone}}"
-                             minlength="11" maxlength="11" pattern="\d*" readonly />
+                             minlength="11" maxlength="11" pattern="^[۰-۹0-9]*$" readonly />
                 @else
                     <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')"
-                             minlength="11" maxlength="11" pattern="\d*"/>
+                             minlength="11" maxlength="11" pattern="^[۰-۹0-9]*$"/>
                 @endif
             </div>
 
