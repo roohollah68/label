@@ -36,23 +36,25 @@
                     </div>
                 </div>
             @endforeach
-            @if(isset($req['file']))
-                    <input type="submit" class="btn btn-success" value="ذخیره">&nbsp;
-                    <a href="/receipt/{{$req['file']}}.jpg" target="_blank"><img style="width: 300px" src="/receipt/{{$req['file']}}.jpg"></a>
-                <input type="hidden" name="file" value="{{$req['file']}}.jpg">
-                @else
-                    <div class="col-md-6">
-                        <div class="form-group input-group ">
-                            <div class="input-group-append" style="width: 160px">
-                                <label for="receipt" class="input-group-text w-100">تصویر رسید بانکی:</label>
-                            </div>
-                            <input type="file" id="receipt" class="" name="receipt">
+            @unless(isset($req['file']))
+
+                <div class="col-md-6">
+                    <div class="form-group input-group ">
+                        <div class="input-group-append" style="width: 160px">
+                            <label for="receipt" class="input-group-text w-100">تصویر رسید بانکی:</label>
                         </div>
+                        <input type="file" id="receipt" class="" name="receipt">
                     </div>
-                @endif
+                </div>
+            @endunless
 
         </div>
         <input type="submit" class="btn btn-success" value="ذخیره">&nbsp;
         <input type="reset" class="btn btn-danger" value="پاک کردن">
+        @if(isset($req['file']))
+            <a href="/receipt/{{$req['file']}}.jpg" target="_blank"><img style="width: 300px"
+                                                                         src="/receipt/{{$req['file']}}.jpg"></a>
+            <input type="hidden" name="file" value="{{$req['file']}}.jpg">
+        @endif
     </form>
 @endsection
