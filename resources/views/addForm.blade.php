@@ -14,9 +14,9 @@
         <div class="row">
             @foreach([
                 ['name' , 'text' , 'نام و نام خانوادگی' , 'input' , 'required'],
-                ['phone' , 'text' , 'شماره تماس' , 'input', 'required minlength=11 maxlength=11 pattern=\d*'],
+                ['phone' , 'text' , 'شماره تماس' , 'input', 'required minlength=11 maxlength=11 pattern=^[۰-۹0-9]*$'],
                 ['address' , 'text' , 'آدرس' , 'textarea', 'required'],
-                ['zip_code' , 'text' , 'کد پستی' , 'input', 'minlength=10 maxlength=10 pattern=\d*'],
+                ['zip_code' , 'text' , 'کد پستی' , 'input', 'minlength=10 maxlength=10 pattern=^[۰-۹0-9]*$'],
                 ['orders' , 'text' , 'سفارشات' , 'textarea', 'required'],
                 ['desc' , 'text' , 'توضیحات' , 'textarea', 'required'],
 
