@@ -24,7 +24,6 @@ class TelegramController extends Controller
 
         $this->req = json_decode(file_get_contents('php://input'));
         $this->chat_id = $this->req->message->from->id;
-        Storage::disk('public')->put('res.txt', json_encode($request->all()));
         $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
             $keyboard = new RKM(Keyboard::$user_option);
@@ -56,13 +55,11 @@ class TelegramController extends Controller
                 if ($user)
                     $this->confirm_phone($user);
                 else
-                    $this->bot->sendMessage('90123252',$this->chat_id);
-                    die();
                     $this->register_user($phone);
             } else
                 $this->request_phone();
         }
-        Storage::disk('public')->put('res.txt', json_encode($request->all()));
+//        Storage::disk('public')->put('res.txt', json_encode($request->all()));
 
     }
 
@@ -88,7 +85,9 @@ class TelegramController extends Controller
 
     public function register_user($phone)
     {
-        $name = $this->req->message->contact->first_name . ' ' . $this->req->message->contact->last_name;
+        $first_name = (isset($this->req->message->contact->first_name))?$this->req->message->contact->first_name:"";
+        $last_name = (isset($this->req->message->contact->last_name))?$this->req->message->contact->last_name:"";
+        $name = $last_name . ' ' . $first_name;
         $url = env('APP_URL') . "register-from-telegram?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
         $keyboard = new IKM(Keyboard::register_user($url, "ثبت نام"));
         $message = "
