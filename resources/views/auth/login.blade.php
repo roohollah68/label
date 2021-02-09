@@ -48,6 +48,10 @@
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
                         {{ __('حساب کاربری ندارید؟') }}
                     </a>
+
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="https://t.me/safir_order_bot">
+                        {{ __('ورود با تلگرام') }}
+                    </a>
                 @endif
                 <x-button class="ml-3">
                     {{ __('ورود') }}
