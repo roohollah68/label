@@ -24,8 +24,6 @@ class TelegramController extends Controller
 
         $this->req = json_decode(file_get_contents('php://input'));
         $this->chat_id = $this->req->message->from->id;
-        $this->bot->sendMessage('90123252',$this->chat_id);
-        die();
 
         $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
@@ -58,6 +56,8 @@ class TelegramController extends Controller
                 if ($user)
                     $this->confirm_phone($user);
                 else
+                    $this->bot->sendMessage('90123252',$this->chat_id);
+                    die();
                     $this->register_user($phone);
             } else
                 $this->request_phone();
