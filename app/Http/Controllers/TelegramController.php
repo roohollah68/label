@@ -220,7 +220,7 @@ class TelegramController extends Controller
 سفارشات: {$order->orders}
 کدپستی: {$order->zip_code}
 توضیحات: {$order->desc}
-زمان ثبت: {$order->created_at}
+زمان ثبت: {$order->created_at->timezone('Asia/Tehran')}
 سفیر: {$order->user()->first()->name}
             ";
     }
