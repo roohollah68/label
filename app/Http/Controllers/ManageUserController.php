@@ -57,7 +57,7 @@ class ManageUserController extends Controller
         return view('edit-user', ['admin' => true, 'user' => $user]);
     }
 
-    public function update($id, Request $request)
+    public function update( Request $request ,$id = null)
     {
         if (auth()->user()->role != 'admin')
             $id = auth()->user()->id;

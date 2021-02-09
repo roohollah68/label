@@ -35,6 +35,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/edit_user/{id}',[ManageUserController::class , 'edit']);
     Route::get('/edit_user',[ManageUserController::class , 'edit'])->name('editUser');
     Route::post('/edit_user/{id}',[ManageUserController::class , 'update']);
+    Route::post('/edit_user',[ManageUserController::class , 'update']);
 
 });
 
