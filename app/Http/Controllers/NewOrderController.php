@@ -55,6 +55,7 @@ class NewOrderController extends Controller
     public function fromTelegramWithPhoto($id, $pass, $file_id)
     {
         $user = User::findOrFail($id);
+        return $user;
         if ($user->password == $pass) {
             auth()->login($user);
             $order = $user->orders->where('receipt', $file_id . '.jpg')->first();
