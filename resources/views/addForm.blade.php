@@ -52,7 +52,7 @@
         <input type="submit" class="btn btn-success" value="ذخیره">&nbsp;
         <input type="reset" class="btn btn-danger" value="پاک کردن">
         @if(isset($req['file']))
-            <a href="/receipt/{{$req['file']}}.jpg" target="_blank"><img style="width: 300px"
+            <a href="/receipt/{{$req['file']}}.jpg" target="_blank"><img style="width: 200px"
                                                                          src="/receipt/{{$req['file']}}.jpg"></a>
             <input type="hidden" name="file" value="{{$req['file']}}.jpg">
         @endif
