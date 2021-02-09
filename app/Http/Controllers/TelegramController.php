@@ -54,7 +54,7 @@ class TelegramController extends Controller
                 if ($user)
                     $this->confirm_phone($user);
                 else
-                    $this->register_user();
+                    $this->register_user($phone);
             } else
                 $this->request_phone();
         }
@@ -82,16 +82,14 @@ class TelegramController extends Controller
 
     }
 
-    public function register_user()
+    public function register_user($phone)
     {
-        $phone = $this->req->message->contact->phone_number;
-        $phone = '0' . substr($phone, -10);
         $name = $this->req->message->contact->first_name . ' ' . $this->req->message->contact->last_name;
         $url = env('APP_URL') . "register?name={$name}&phone={$phone}&telegram_id={$this->chat_id}";
         $keyboard = new IKM(Keyboard::register_user($url, "ثبت نام"));
         $message = "
 متاسفانه با این شماره تلفن حسابی وجود ندارد
-برای ایجاد حسساب به لینک زیر بروید:";
+برای ایجاد حساب به لینک زیر بروید:";
         $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
 
