@@ -45,7 +45,7 @@ class NewOrderController extends Controller
     public function fromTelegram($id, $pass)
     {
         $user = User::findOrFail($id);
-        if ($user->password == $pass) {
+        if ($user->telegram_code == $pass) {
             auth()->login($user);
             return redirect()->route('newOrder');
         }
@@ -55,8 +55,7 @@ class NewOrderController extends Controller
     public function fromTelegramWithPhoto($id, $pass, $file_id)
     {
         $user = User::findOrFail($id);
-        return $user;
-        if ($user->password == $pass) {
+        if ($user->telegram_code == $pass) {
             auth()->login($user);
             $order = $user->orders->where('receipt', $file_id . '.jpg')->first();
             if ($order)

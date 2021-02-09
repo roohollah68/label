@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'verified'=>true,
             'role'=>'admin',
             'password'=>bcrypt('admin1234'),
+            'telegram_code' => Str::random(40),
         ]);
     }
 }

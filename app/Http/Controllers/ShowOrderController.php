@@ -50,7 +50,7 @@ class ShowOrderController extends Controller
     public function fromTelegram($id ,$pass)
     {
         $user = User::findOrFail($id);
-        if($user->password == $pass){
+        if($user->telegram_code == $pass){
             auth()->login($user);
             return redirect()->route('listOrders');
         }

@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -44,6 +45,7 @@ class RegisteredUserController extends Controller
             'telegram_id' => 'numeric|unique:users',
             'website' => 'required',
             'password' => 'required|string|confirmed|min:8',
+            'telegram_code' => Str::random(40),
         ]);
 
         $user = User::create([

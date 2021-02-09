@@ -123,7 +123,7 @@ class TelegramController extends Controller
     public function list_orders($user)
     {
         $message = "برای دیدن لیست کامل فاکتورها به آدرس زیر بروید:";
-        $url = env('APP_URL') . "list-orders/{$user->id}/{$user->password}";
+        $url = env('APP_URL') . "list-orders/{$user->id}/{$user->telegram_code}";
         $keyboard = new IKM(Keyboard::register_user($url, "مشاهده تمام فاکتورها"));
         $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
@@ -131,7 +131,7 @@ class TelegramController extends Controller
     public function new_order($user)
     {
         $message = "برای ثبت فاکتور جدید به آدرس زیر بروید:";
-        $url = env('APP_URL') . "new-order/{$user->id}/{$user->password}";
+        $url = env('APP_URL') . "new-order/{$user->id}/{$user->telegram_code}";
         $keyboard = new IKM(Keyboard::register_user($url, "ثبت فاکتور جدید"));
         $this->bot->sendMessage($this->chat_id, $message, null, false, null, $keyboard);
     }
@@ -140,7 +140,7 @@ class TelegramController extends Controller
     {
         $file_id = end($this->req->message->photo)->file_id;
         $caption = "برای ثبت فاکتور مربوط به این رسید روی لینک زیر کلیک کنید";
-        $url = env('APP_URL') . "new-order-receipt/{$user->id}/{$user->password}/{$file_id}";
+        $url = env('APP_URL') . "new-order-receipt/{$user->id}/{$user->telegram_code}/{$file_id}";
         $keyboard = new IKM(Keyboard::register_user($url, "ثبت فاکتور مربوط به این رسید"));
         $this->bot->sendPhoto($this->chat_id, $file_id, $caption, $this->req->message->message_id, $keyboard);
     }
