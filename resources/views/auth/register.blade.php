@@ -6,13 +6,20 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <input type="hidden" name="telegram_id" value="{{isset($req['telegram_id'])?$req['telegram_id']:''}}" >
-            <!-- Name -->
+            @if($telegram_id)
+                <input type="hidden" name="telegram_id" value="{{$telegram_id}}">
+        @endif
+
+        <!-- Name -->
             <div class="required">
                 <x-label for="name" :value="__('نام و نام خانوادگی')"/>
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{isset($req['name'])?$req['name']:old('name')}}"
-                         required autofocus/>
+                @if($name)
+                    <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{$name}}" required
+                             autofocus/>
+                @else
+                    <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
+                             autofocus/>
+                @endif
             </div>
 
             <!-- Email Address -->
@@ -25,9 +32,13 @@
 
             <div class="mt-4 required">
                 <x-label for="phone" :value="__('شماره تماس')"/>
-
-                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{isset($req['phone'])?$req['phone']:old('phone')}}"
-                         minlength="11" maxlength="11" pattern="\d*"/>
+                @if($phone)
+                    <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{$phone}}"
+                             minlength="11" maxlength="11" pattern="\d*" readonly />
+                @else
+                    <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')"
+                             minlength="11" maxlength="11" pattern="\d*"/>
+                @endif
             </div>
 
             <div class="mt-4 required">

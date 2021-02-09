@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DeleteOrderController;
 use App\Http\Controllers\EditOrderController;
 use App\Http\Controllers\ManageUserController;
@@ -38,6 +39,8 @@ Route::group(['middleware'=>'auth'],function (){
 
 Route::post('/telegram',[TelegramController::class , 'receive']);
 //Route::get('/telegram',[TelegramController::class , 'receive']);
+
+Route::get('register-from-telegram',[RegisteredUserController::class , 'fromTelegram']);
 
 Route::get('list-orders/{id}/{pass}',[ShowOrderController::class , 'fromTelegram']);
 

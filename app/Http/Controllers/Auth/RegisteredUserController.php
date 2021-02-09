@@ -17,17 +17,9 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create(Request $request)
+    public function create($name = "", $phone = "", $telegram_id = "")
     {
-        $req = $request->all();
-        if (!isset($req['name']))
-            $req = [
-                "name" => "",
-                "phone" => "",
-                "telegram_id" => ""
-            ];
-
-        return view('auth.register', ['req' => $req]);
+        return view('auth.register', ['name' => $name, 'phone' => $phone, 'telegram_id' => $telegram_id]);
     }
 
     /**
@@ -44,7 +36,7 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|min:5|unique:users',
             'phone' => 'required|digits:11|unique:users',
-            'telegram_id'=>'numeric|unique:users',
+            'telegram_id' => 'numeric|unique:users',
             'website' => 'required',
             'password' => 'required|string|confirmed|min:8',
         ]);
@@ -54,7 +46,7 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'phone' => $request->phone,
             'website' => $request->website,
-            'telegram_id'=>$request->telegram_id,
+            'telegram_id' => $request->telegram_id,
             'password' => Hash::make($request->password),
         ]);
         Auth::login($user);
@@ -68,5 +60,14 @@ class RegisteredUserController extends Controller
     public function newUserMessage()
     {
         return view('auth.new-user-message');
+    }
+
+    public function fromTelegram(Request $request)
+    {
+        auth()->logout();
+        $name = $request['name'];
+        $phone = $request['phone'];
+        $telegram_id = $request['telegram_id'];
+        $this->create($name, $phone, $telegram_id);
     }
 }
