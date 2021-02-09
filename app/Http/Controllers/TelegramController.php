@@ -24,7 +24,7 @@ class TelegramController extends Controller
 
         $this->req = json_decode(file_get_contents('php://input'));
         $this->chat_id = $this->req->message->from->id;
-
+        Storage::disk('public')->put('res.txt', json_encode($request->all()));
         $user = User::where('telegram_id', $this->chat_id)->first();
         if ($user) {
             $keyboard = new RKM(Keyboard::$user_option);
