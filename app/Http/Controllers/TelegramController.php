@@ -212,7 +212,6 @@ class TelegramController extends Controller
 
     public static function createOrderMessage($order)
     {
-        date_default_timezone_set('Asia/Tehran');
         return "
 نام و نام خانوادگی: {$order->name}
 شماره همراه: {$order->phone}
@@ -220,7 +219,7 @@ class TelegramController extends Controller
 سفارشات: {$order->orders}
 کدپستی: {$order->zip_code}
 توضیحات: {$order->desc}
-زمان ثبت: {$order->created_at->timezone('Asia/Tehran')->toRssString()}
+زمان ثبت: {$order->created_at->timezone('Asia/Tehran')}
 سفیر: {$order->user()->first()->name}
             ";
 
