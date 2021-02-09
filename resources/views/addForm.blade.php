@@ -37,6 +37,7 @@
                 </div>
             @endforeach
             @if(isset($req['file']))
+                    <input type="submit" class="btn btn-success" value="ذخیره">&nbsp;
                     <a href="/receipt/{{$req['file']}}.jpg" target="_blank"><img style="width: 300px" src="/receipt/{{$req['file']}}.jpg"></a>
                 <input type="hidden" name="file" value="{{$req['file']}}.jpg">
                 @else
