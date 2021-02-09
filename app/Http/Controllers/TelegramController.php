@@ -22,6 +22,7 @@ class TelegramController extends Controller
     {
         $this->bot = new BotApi(env('TelegramToken'));
         $this->bot->sendMessage('90123252','hi');
+        die();
         $this->req = json_decode(file_get_contents('php://input'));
         $this->chat_id = $this->req->message->from->id;
         $user = User::where('telegram_id', $this->chat_id)->first();
