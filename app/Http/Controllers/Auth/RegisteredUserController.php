@@ -17,7 +17,12 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create($name = "", $phone = "", $telegram_id = "")
+    public function create()
+    {
+        return view('auth.register');
+    }
+
+    public function createFromTelegram($name, $phone, $telegram_id)
     {
         return view('auth.register', ['name' => $name, 'phone' => $phone, 'telegram_id' => $telegram_id]);
     }
@@ -68,7 +73,6 @@ class RegisteredUserController extends Controller
         $name = $request['name'];
         $phone = $request['phone'];
         $telegram_id = $request['telegram_id'];
-        return redirect()->route('register');
-        $this->create($name, $phone, $telegram_id);
+        return redirect("register/$name/$phone/$telegram_id");
     }
 }
