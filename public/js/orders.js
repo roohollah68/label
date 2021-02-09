@@ -69,11 +69,10 @@ function prepare_data() {
             (deleted ? `
                     <i class="fa fa-trash-restore btn btn-primary" onclick="restore_order(${id})" title="بازگردانی"></i>
             ` : `
-                    <a class="fa fa-edit btn btn-primary" href="edit_order/${id}" title="ویرایش سفارش"></a>`
-            )
-            +
-            ` <i class="fab fa-telegram-plane btn btn-info" onclick="sendToTelegram(${id})" title="مشاهده PDF"></i>`+
-            ` <i class="fa fa-file-pdf btn btn-secondary" onclick="generatePDF(${id})" title="مشاهده PDF"></i>`,
+                    <i class="fab fa-telegram-plane btn btn-info" onclick="sendToTelegram(${id})" title="مشاهده PDF"></i>
+                    <a class="fa fa-edit btn btn-primary" href="edit_order/${id}" title="ویرایش سفارش"></a>
+                     <i class="fa fa-file-pdf btn btn-secondary" onclick="generatePDF(${id})" title="مشاهده PDF"></i>`
+            ),
 
             row.address,
 
@@ -259,16 +258,7 @@ function view_order(id) {
 
 function generatePDF(id) {
     let row = orders[id];
-    let dialog = `
-<div class="printed">
-    <span>نام و نام خانوادگی </span>: <b>${fix_persian(row.name)}</b> <br>
-    <span>شماره تماس </span>: <b>${row.phone}</b> <br>
-    <span>آدرس </span>: <b>${fix_persian(row.address)}</b> <br>
-    <span>کد پستی </span>: <b>${row.zip_code}</b> <br>
-    <span>سفارشات </span>: <b>${fix_persian(row.orders)}</b> <br>
-    <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
-</div>
-    `;
+    let dialog = label_text(row);
     console.log(dialog);
     let opt = {
         margin: 0.6,
@@ -290,16 +280,7 @@ function generatePDFs() {
     let dialog = [];
     ids.forEach(id => {
         let row = orders[id]
-        dialog.push(`
-<div class="printed">
-    <span>نام و نام خانوادگی </span>: <b>${fix_persian(row.name)}</b> <br>
-    <span>شماره تماس </span>: <b>${row.phone}</b> <br>
-    <span>آدرس </span>: <b>${fix_persian(row.address)}</b> <br>
-    <span>کد پستی </span>: <b>${row.zip_code}</b> <br>
-    <span>سفارشات </span>: <b>${fix_persian(row.orders)}</b> <br>
-    <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
-</div>
-    `);
+        dialog.push(label_text(row));
     })
     dialog = dialog.join('<br class="breakhere">')
     let opt = {
@@ -321,6 +302,19 @@ function fix_persian(text) {
         text = text.split(symbol).join("</b>" + symbol + "<b>")
     })
     return text
+}
+
+function label_text(row){
+    return `
+<div class="printed">
+    <span>نام و نام خانوادگی </span>: <b>${fix_persian(row.name)}</b> <br>
+    <span>شماره تماس </span>: <b>${row.phone}</b> <br>
+    <span>آدرس </span>: <b>${fix_persian(row.address)}</b> <br>
+    <span>کد پستی </span>: <b>${row.zip_code}</b> <br>
+    <span>سفارشات </span>: <b>${fix_persian(row.orders)}</b> <br>
+    <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
+</div>
+    `;
 }
 
 function sendToTelegram(id){
