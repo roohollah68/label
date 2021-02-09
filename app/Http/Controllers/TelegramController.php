@@ -221,7 +221,7 @@ class TelegramController extends Controller
 سفارشات: {$order->orders}
 کدپستی: {$order->zip_code}
 توضیحات: {$order->desc}
-زمان ثبت: {".jdate('Y/m/d H:i' , $order->created_at->getTimestamp())."}
+زمان ثبت: ".jdate('Y/m/d H:i' , $order->created_at->getTimestamp())."
 سفیر: {$order->user()->first()->name}
             ";
 
