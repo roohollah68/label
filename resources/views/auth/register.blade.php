@@ -6,14 +6,14 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            @if($telegram_id)
+            @if(isset($telegram_id))
                 <input type="hidden" name="telegram_id" value="{{$telegram_id}}">
         @endif
 
         <!-- Name -->
             <div class="required">
                 <x-label for="name" :value="__('نام و نام خانوادگی')"/>
-                @if($name)
+                @if(isset($name))
                     <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{$name}}" required
                              autofocus/>
                 @else
@@ -32,7 +32,7 @@
 
             <div class="mt-4 required">
                 <x-label for="phone" :value="__('شماره تماس')"/>
-                @if($phone)
+                @if(isset($phone))
                     <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{$phone}}"
                              minlength="11" maxlength="11" pattern="^[۰-۹0-9]*$" readonly />
                 @else
