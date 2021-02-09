@@ -212,6 +212,8 @@ class TelegramController extends Controller
 
     public static function createOrderMessage($order)
     {
+        include('../app/jdf.php');
+        date_default_timezone_set('UTC');
         return "
 نام و نام خانوادگی: {$order->name}
 شماره همراه: {$order->phone}
@@ -219,9 +221,8 @@ class TelegramController extends Controller
 سفارشات: {$order->orders}
 کدپستی: {$order->zip_code}
 توضیحات: {$order->desc}
-زمان ثبت: {$order->created_at->timezone('Asia/Tehran')}
+زمان ثبت: {jdate('Y/m/d H:i' , $order->created_at->getTimestamp())}
 سفیر: {$order->user()->first()->name}
             ";
-
     }
 }
