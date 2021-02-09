@@ -52,6 +52,7 @@
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="https://t.me/safir_order_bot">
                         {{ __('ورود با تلگرام') }}
                     </a>
+                    &nbsp;&nbsp;&nbsp;
                 @endif
                 <x-button class="ml-3">
                     {{ __('ورود') }}
