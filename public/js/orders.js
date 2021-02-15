@@ -117,17 +117,17 @@ function create_table(data) {
                 "searchable": false
             },
             {
-                targets: [0, 5, 6,7, 8, 9, 10, 11, 12],
+                targets: [0, 5, 6, 7, 8, 9, 10, 11, 12],
                 orderable: false
             },
 
             {
-                targets: [1,8, 9, 10, 11, 12,13],
+                targets: [1, 8, 9, 10, 11, 12, 13],
                 visible: false
             }
         ],
         data: data,
-        order: [[13, "asc"]],
+        order: [[13, "desc"]],
         language: {
             "decimal": "",
             "emptyTable": "هیچ سفارشی موجود نیست",
@@ -223,12 +223,12 @@ function view_order(id) {
     let row = orders[id]
 
     let dialog = `
-    <div title="مشاهده سفارش" class="dialogs">`+
-        (row.receipt?
-    `<a href="receipt/${row.receipt}" target="_blank"><img style="width: 300px" src="receipt/${row.receipt}"></a>`
-        :
-        "")
-    +`<span>نام و نام خانوادگی:</span> <b>${row.name}</b> <br>
+    <div title="مشاهده سفارش" class="dialogs">` +
+        (row.receipt ?
+            `<a href="receipt/${row.receipt}" target="_blank"><img style="width: 300px" src="receipt/${row.receipt}"></a>`
+            :
+            "")
+        + `<span>نام و نام خانوادگی:</span> <b>${row.name}</b> <br>
     <span>شماره تماس:</span> <b>${row.phone}</b> <br>
     <span>آدرس:</span> <b>${row.address}</b> <br>
     <span>کد پستی:</span> <b>${row.zip_code}</b> <br>
@@ -304,20 +304,21 @@ function fix_persian(text) {
     return text
 }
 
-function label_text(row){
+function label_text(row) {
     return `
 <div class="printed">
     <span>نام و نام خانوادگی </span>: <b>${fix_persian(row.name)}</b> <br>
-    <span>شماره تماس </span>: <b>${row.phone}</b> <br>
+    <span>شماره تماس </span>: <b>${row.phone}</b>&nbsp;&nbsp;&nbsp; ` +
+        (row.zip_code ? `<span>کد پستی </span>: <b>${row.zip_code}</b>` : '')
+    + `<br>
     <span>آدرس </span>: <b>${fix_persian(row.address)}</b> <br>
-    <span>کد پستی </span>: <b>${row.zip_code}</b> <br>
     <span>سفارشات </span>: <b>${fix_persian(row.orders)}</b> <br>
     <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
 </div>
     `;
 }
 
-function sendToTelegram(id){
+function sendToTelegram(id) {
     $.post('send_to_telegram/' + id, {_token: token})
         .done(res => {
             $.notify(res, 'info');
