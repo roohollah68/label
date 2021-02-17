@@ -14,7 +14,8 @@
     <label for="deleted_orders">مشاهده سفارشات حذف شده</label><input type="checkbox" id="deleted_orders"
                                                                      onclick="prepare_data()">
     <br>
-    @if($admin)
+
+    <div  @if(!$admin) class="d-none" @endif >
         <div class="form-group input-group col-lg-3">
             <div class="input-group-append">
                 <label for="user" class="input-group-text">سفیر:</label>
@@ -35,7 +36,7 @@
                 <option value="dorateashop">dorateashop</option>
             </select>
         </div>
-    @endif
+    </div>
     <table class="stripe">
     </table>
     @include('layout.command')

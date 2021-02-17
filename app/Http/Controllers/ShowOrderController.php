@@ -23,9 +23,11 @@ class ShowOrderController extends Controller
         if (auth()->user()->role == 'admin') {
             $users = User::withTrashed()->get();
             $orders = Order::withTrashed()->get();
+            $isAdmin = true;
         }else{
             $users = [auth()->user()];
             $orders = auth()->user()->orders()->withTrashed()->get();
+            $isAdmin = false;
         }
 
         include ('../app/jdf.php');
@@ -44,7 +46,7 @@ class ShowOrderController extends Controller
                 $order->deleted_at_p = null;
             $orders[$key] = $order;
         }
-        return [$orders , $users];
+        return [$orders , $users,$isAdmin];
     }
 
     public function fromTelegram($id ,$pass)

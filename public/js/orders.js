@@ -1,6 +1,6 @@
 let token;
 let table;
-let orders, users;
+let orders, users,isAdmin;
 let ids = [];
 $(() => {
     token = $('input[name=_token]').val();
@@ -22,6 +22,7 @@ function get_data() {
                 users[user.id] = user;
                 $('#user').append(`<option value="${user.id}">${user.name}</option>`)
             })
+            isAdmin = res[2];
             ids = [];
             prepare_data();
             $('.main_check').prop('checked', false);
@@ -31,8 +32,8 @@ function get_data() {
 function prepare_data() {
     let res = [];
     let counter = 0;
-    let user = $('#user option:selected').val() || 'all';
-    let website = $('#website option:selected').val() || 'all';
+    let user = $('#user option:selected').val();
+    let website = $('#website option:selected').val();
     let deleted = $("#deleted_orders").prop('checked');
     $.each(orders, (id, row) => {
         if (user !== 'all' && user != row.user_id)
@@ -301,6 +302,23 @@ function fix_persian(text) {
     symbols.forEach(symbol => {
         text = text.split(symbol).join("</b>" + symbol + "<b>")
     })
+
+    let numbers = ['0','1','2','3','4','5','6','7','8','9','۰','۱','۲','۳','۴','۵','۶','۷','۸','۹']
+    let spaces = [];
+    for(let ii=0; ii<text.length ;ii++ ){
+        if (numbers.indexOf(text[ii])+1){
+            if(numbers.indexOf(text[ii+1])+1 || symbols.indexOf(text[ii+1])+1 || text[ii+1]==' ')
+                continue
+            spaces.push(ii);
+        }
+    }
+console.log(spaces)
+console.log(text)
+    spaces.forEach(ii=>{
+        text = [text.slice(0, ii+1), ' ', text.slice(ii+1)].join('')
+    })
+    console.log(text)
+
     return text
 }
 
