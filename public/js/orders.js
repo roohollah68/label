@@ -1,6 +1,6 @@
 let token;
 let table;
-let orders, users,isAdmin;
+let orders, users, isAdmin;
 let ids = [];
 $(() => {
     token = $('input[name=_token]').val();
@@ -60,10 +60,12 @@ function prepare_data() {
                 :
                 row.orders,
 
-            (row.desc.length > 30) ?
-                row.desc.substr(0, 30) + ' ...'
-                :
-                row.desc,
+            createdTime(row),
+
+            // (row.desc.length > 30) ?
+            //     row.desc.substr(0, 30) + ' ...'
+            //     :
+            //     row.desc,
 
             `<i class="fa fa-eye btn btn-info" onclick="view_order(${id})"></i> ` +
             ` <i class="fa fa-trash-alt btn btn-danger" onclick="delete_order(${id})" title="حذف سفارش" ></i>` +
@@ -103,7 +105,8 @@ function create_table(data) {
             {title: "سفیر"},
             {title: "فروشگاه"},
             {title: "سفارش"},
-            {title: "توضیحات"},
+            // {title: "توضیحات"},
+            {title: "زمان ثبت"},
             {title: "عملیات"},
             {title: "آدرس"},
             {title: "توضیحات"},
@@ -114,11 +117,11 @@ function create_table(data) {
         ],
         "columnDefs": [
             {
-                "targets": [0, 1, 7],
+                "targets": [0, 1, 6, 7],
                 "searchable": false
             },
             {
-                targets: [0, 5, 6, 7, 8, 9, 10, 11, 12],
+                targets: [0, 5, 7, 8, 9, 10, 11, 12],
                 orderable: false
             },
 
@@ -303,19 +306,19 @@ function fix_persian(text) {
         text = text.split(symbol).join("</b>" + symbol + "<b>")
     })
 
-    let numbers = ['0','1','2','3','4','5','6','7','8','9','۰','۱','۲','۳','۴','۵','۶','۷','۸','۹']
+    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
     let spaces = [];
-    for(let ii=0; ii<text.length ;ii++ ){
-        if (numbers.indexOf(text[ii])+1){
-            if(numbers.indexOf(text[ii+1])+1 || symbols.indexOf(text[ii+1])+1 || text[ii+1]==' ')
+    for (let ii = 0; ii < text.length; ii++) {
+        if (numbers.indexOf(text[ii]) + 1) {
+            if (numbers.indexOf(text[ii + 1]) + 1 || symbols.indexOf(text[ii + 1]) + 1 || text[ii + 1] == ' ')
                 continue
             spaces.push(ii);
         }
     }
-console.log(spaces)
-console.log(text)
-    spaces.forEach(ii=>{
-        text = [text.slice(0, ii+1), ' ', text.slice(ii+1)].join('')
+    console.log(spaces)
+    console.log(text)
+    spaces.forEach(ii => {
+        text = [text.slice(0, ii + 1), ' ', text.slice(ii + 1)].join('')
     })
     console.log(text)
 
@@ -328,7 +331,7 @@ function label_text(row) {
     <span>نام و نام خانوادگی </span>: <b>${fix_persian(row.name)}</b> <br>
     <span>شماره تماس </span>: <b>${row.phone}</b>&nbsp;&nbsp;&nbsp; ` +
         (row.zip_code ? `<span>کد پستی </span>: <b>${row.zip_code}</b>` : '')
-    + `<br>
+        + `<br>
     <span>آدرس </span>: <b>${fix_persian(row.address)}</b> <br>
     <span>سفارشات </span>: <b>${fix_persian(row.orders)}</b> <br>
     <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
@@ -341,4 +344,29 @@ function sendToTelegram(id) {
         .done(res => {
             $.notify(res, 'info');
         })
+}
+
+function createdTime(row) {
+    let timestamp = new Date(row.created_at);
+    timestamp = timestamp.getTime()+1000*3600*3.5;
+    let diff = (Date.now() - timestamp) / 1000;
+    let res = `<span class="d-none">${timestamp}</span>`
+    if (diff < 60) {
+        res += `<span>لحظاتی پیش</span>`
+
+    } else if (diff < 3600) {
+        let minute = Math.floor(diff / 60);
+        res += `<span>${minute} دقیقه قبل </span>`
+
+    } else if (diff < 3600 * 24) {
+        let hour = Math.floor(diff / 3600);
+        res += `<span>${hour} ساعت قبل </span>`
+    } else if (diff < 3600 * 24 * 30) {
+        let day = Math.floor(diff / (3600 * 24));
+        res += `<span>${day} روز قبل </span>`
+    } else {
+        let month = Math.floor(diff / (3600 * 24));
+        res += `<span>${month} ماه قبل </span>`
+    }
+    return res;
 }
