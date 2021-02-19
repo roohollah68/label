@@ -348,7 +348,7 @@ function sendToTelegram(id) {
 
 function createdTime(row) {
     let timestamp = new Date(row.created_at);
-    timestamp = timestamp.getTime()+1000*3600*3.5;
+    timestamp = timestamp.getTime() + 1000 * 3600 * 3.5;
     let diff = (Date.now() - timestamp) / 1000;
     let res = `<span class="d-none">${timestamp}</span>`
     if (diff < 60) {
@@ -368,5 +368,28 @@ function createdTime(row) {
         let month = Math.floor(diff / (3600 * 24));
         res += `<span>${month} ماه قبل </span>`
     }
+    // if(!isAdmin)
+    //     return res;
+    if (row.state == 0) {
+        res = `<span class="btn btn-secondary" onclick="change_state(${row.id})">${res} <i id="row-state-${row.id}"></i></span>`
+    } else if (row.state == 1) {
+        res = `<span class="btn btn-info" onclick="change_state(${row.id})">${res} <i id="row-state-${row.id}" class="fas fa-check"></i></span>`
+    } else if (row.state > 1) {
+        res = `<span class="btn btn-success" onclick="change_state(${row.id})">${res} <i id="row-state-${row.id}" class="fas fa-check-double"></i></span>`
+    }
+
     return res;
+}
+
+function change_state(id){
+    $.post('increase_statue/'+id,{_token:token})
+        .done(res=>{
+            if(res == 0){
+                $('#row-state-'+id).removeClass().parent().removeClass().addClass('btn btn-secondary')
+            }else if(res == 1){
+                $('#row-state-'+id).removeClass().addClass('fas fa-check').parent().removeClass().addClass('btn btn-info')
+            }else if(res > 1){
+                $('#row-state-'+id).removeClass().addClass('fas fa-check-double').parent().removeClass().addClass('btn btn-success')
+            }
+        })
 }

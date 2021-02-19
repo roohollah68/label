@@ -23,7 +23,7 @@ class CreateOrdersTable extends Migration
             $table->string('orders');
             $table->string('desc',300)->nullable();
             $table->string('receipt')->nullable();
-            $table->enum('state',['start','process','send'])->default('start');
+            $table->enum('state',['0','1','2','3','4','5','6'])->default('0');
             $table->softDeletes();
             $table->timestamps();
         });

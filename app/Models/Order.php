@@ -19,7 +19,8 @@ class Order extends Model
         'orders',
         'desc',
         'printed',
-        'receipt'
+        'receipt',
+        'state',
     ];
 
     public function user()

@@ -17,6 +17,7 @@ Route::group(['middleware'=>'auth'],function (){
 
     Route::get('edit_order/{id}',[EditOrderController::class , 'editForm']);
     Route::post('edit_order/{id}',[EditOrderController::class , 'editOrder']);
+    Route::post('increase_statue/{id}',[EditOrderController::class , 'increaseStatue']);
 
     Route::post('send_to_telegram/{id}',[TelegramController::class , 'sendOrderToTelegramById']);
 

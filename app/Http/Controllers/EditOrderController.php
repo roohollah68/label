@@ -49,4 +49,14 @@ class EditOrderController extends Controller
         return redirect()->route('listOrders');
     }
 
+    public function increaseStatue($id)
+    {
+        if(auth()->user()->role != 'admin'){
+            abort(403);
+        }
+        $order = Order::findOrFail($id);
+        $order->state = ''.(($order->state+1)%7);
+        $order->save();
+        return $order->state;
+    }
 }
