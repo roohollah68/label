@@ -301,7 +301,7 @@ function generatePDFs() {
 
 function fix_persian(text) {
     text = text.replace(/[0-9]+\/[0-9]+/g , function(x){return x.split('/').reverse().join(' / ')})
-    let symbols = ["/", '\\', ",", ".","+", "-", "_", "#", "@", "(", ")", "{", "}", "[", "]", "،", "$", "|"];
+    let symbols = ["/", '\\', ",", ".","+", "-", ":", "_", "#", "@", "(", ")", "{", "}", "[", "]", "،", "$", "|"];
     symbols.forEach(symbol => {
         text = text.split(symbol).join("</b>" + symbol + "<b>")
     })
