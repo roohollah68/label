@@ -263,7 +263,6 @@ function view_order(id) {
 function generatePDF(id) {
     let row = orders[id];
     let dialog = label_text(row);
-    console.log(dialog);
     let opt = {
         margin: 0.6,
         image: {type: 'jpeg', quality: 1},
@@ -286,7 +285,7 @@ function generatePDFs() {
         let row = orders[id]
         dialog.push(label_text(row));
     })
-    dialog = dialog.join('<br class="breakhere">')
+    dialog = dialog.join('<i class="breakhere"></i>')//
     let opt = {
         margin: 0.6,
         image: {type: 'jpeg', quality: 1},
@@ -301,11 +300,10 @@ function generatePDFs() {
 }
 
 function fix_persian(text) {
-    let symbols = [",", ".", "-", "_", "#", "@", "(", ")", "{", "}", "[", "]", "،", "$",];
+    let symbols = ["/", '\\', ",", ".", "-", "_", "#", "@", "(", ")", "{", "}", "[", "]", "،", "$", "|"];
     symbols.forEach(symbol => {
-        text = text.split(symbol).join("</b>" + symbol + "<b>")
+        text = text.split(symbol).join(" </b> " + symbol + " <b> ")
     })
-
     let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
     let spaces = [];
     for (let ii = 0; ii < text.length; ii++) {
@@ -315,18 +313,25 @@ function fix_persian(text) {
             spaces.push(ii);
         }
     }
-    console.log(spaces)
-    console.log(text)
     spaces.forEach(ii => {
         text = [text.slice(0, ii + 1), ' ', text.slice(ii + 1)].join('')
     })
-    console.log(text)
+
+    text = text.replace('(', '^^')
+    text = text.replace('(', '^^')
+    text = text.replace('(', '^^')
+    text = text.replace(')', '(')
+    text = text.replace(')', '(')
+    text = text.replace(')', '(')
+    text = text.replace('^^', ')')
+    text = text.replace('^^', ')')
+    text = text.replace('^^', ')')
 
     return text
 }
 
 function label_text(row) {
-    return `
+    let text = `
 <div class="printed">
     <span>نام و نام خانوادگی </span>: <b>${fix_persian(row.name)}</b> <br>
     <span>شماره تماس </span>: <b>${row.phone}</b>&nbsp;&nbsp;&nbsp; ` +
@@ -337,6 +342,11 @@ function label_text(row) {
     <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
 </div>
     `;
+
+    if ((row.address.length + row.orders.length + row.desc.length) > 250) {
+        return `<div class="long-text">${text}</div>`;
+    }
+    return text;
 }
 
 function sendToTelegram(id) {
@@ -381,15 +391,15 @@ function createdTime(row) {
     return res;
 }
 
-function change_state(id){
-    $.post('increase_statue/'+id,{_token:token})
-        .done(res=>{
-            if(res == 0){
-                $('#row-state-'+id).removeClass().parent().removeClass().addClass('btn btn-secondary')
-            }else if(res == 1){
-                $('#row-state-'+id).removeClass().addClass('fas fa-check').parent().removeClass().addClass('btn btn-info')
-            }else if(res > 1){
-                $('#row-state-'+id).removeClass().addClass('fas fa-check-double').parent().removeClass().addClass('btn btn-success')
+function change_state(id) {
+    $.post('increase_statue/' + id, {_token: token})
+        .done(res => {
+            if (res == 0) {
+                $('#row-state-' + id).removeClass().parent().removeClass().addClass('btn btn-secondary')
+            } else if (res == 1) {
+                $('#row-state-' + id).removeClass().addClass('fas fa-check').parent().removeClass().addClass('btn btn-info')
+            } else if (res > 1) {
+                $('#row-state-' + id).removeClass().addClass('fas fa-check-double').parent().removeClass().addClass('btn btn-success')
             }
         })
 }

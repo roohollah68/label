@@ -40,5 +40,4 @@
     <table class="stripe">
     </table>
     @include('layout.command')
-
 @endsection

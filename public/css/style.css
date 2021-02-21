@@ -16,15 +16,17 @@ body{
     font-size: 40px;
     direction: rtl;
     font-family: BNazanin;
-    line-height: 50px;
 }
 
 .printed span{
     font-size: 45px;
 }
 
-
-.printed{
-    max-height: 480px;
-    overflow-y: hidden;
+.long-text ,.long-text span,.long-text b{
+    font-size: 35px;
 }
+
+canvas{
+    direction: rtl;
+}
+
