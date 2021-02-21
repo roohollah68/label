@@ -264,10 +264,10 @@ function generatePDF(id) {
     let row = orders[id];
     let dialog = label_text(row);
     let opt = {
-        margin: 0.6,
+        margin: 1.2,
         image: {type: 'jpeg', quality: 1},
         filename: row.name + '_' + row.id + '.pdf',
-        jsPDF: {format: [30, 15], unit: 'cm', orientation: 'l'}
+        jsPDF: {format: [60, 30], unit: 'cm', orientation: 'l'}
     };
     html2pdf()
         .set(opt)
@@ -287,11 +287,11 @@ function generatePDFs() {
     })
     dialog = dialog.join('<i class="breakhere"></i>')//
     let opt = {
-        margin: 0.6,
+        margin: 1.2,
         image: {type: 'jpeg', quality: 1},
         filename: 'سفازشات.pdf',
         pagebreak: {after: '.breakhere'},
-        jsPDF: {format: [30, 15], unit: 'cm', orientation: 'l'}
+        jsPDF: {format: [60, 30], unit: 'cm', orientation: 'l'}
     };
     html2pdf()
         .set(opt)

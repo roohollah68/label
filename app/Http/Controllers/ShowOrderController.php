@@ -22,11 +22,11 @@ class ShowOrderController extends Controller
     {
         if (auth()->user()->role == 'admin') {
             $users = User::withTrashed()->get();
-            $orders = Order::withTrashed()->get();
+            $orders = Order::withTrashed()->orderBy('id','desc')->limit(100)->get();
             $isAdmin = true;
         }else{
             $users = [auth()->user()];
-            $orders = auth()->user()->orders()->withTrashed()->get();
+            $orders = auth()->user()->orders()->withTrashed()->orderBy('id','desc')->limit(100)->get();
             $isAdmin = false;
         }
 

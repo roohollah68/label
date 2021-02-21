@@ -13,17 +13,17 @@ body{
 }
 
 .printed ,.printed span , .printed b{
-    font-size: 40px;
+    font-size: 80px;
     direction: rtl;
     font-family: BNazanin;
 }
 
 .printed span{
-    font-size: 45px;
+    font-size: 90px;
 }
 
 .long-text ,.long-text span,.long-text b{
-    font-size: 35px;
+    font-size: 70px;
 }
 
 canvas{
