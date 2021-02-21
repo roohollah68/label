@@ -137,7 +137,7 @@ function create_table(data) {
             "emptyTable": "هیچ سفارشی موجود نیست",
             "info": "نمایش _START_ تا _END_ از _TOTAL_ مورد",
             "infoEmpty": "نمایش  0 تا 0 از 0 مورد",
-            "infoFiltered": "(filtered from _MAX_ total entries)",
+            "infoFiltered": "(فیلتر شده از مجموع _MAX_ داده)",
             "infoPostFix": "",
             "thousands": ",",
             "lengthMenu": "نمایش _MENU_ مورد",
