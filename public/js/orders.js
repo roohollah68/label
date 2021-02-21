@@ -343,7 +343,6 @@ function label_text(row) {
     <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
 </div>
     `;
-    console.log(row.address.length + row.orders.length + row.desc.length)
     if ((row.address.length + row.orders.length + row.desc.length) > 250) {
         return `<div class="long-text">${text}</div>`;
     }
