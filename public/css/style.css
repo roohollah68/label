@@ -26,6 +26,10 @@ body{
     font-size: 70px;
 }
 
+.short-text ,.short-text span,.short-text b{
+    font-size: 100px;
+}
+
 canvas{
     direction: rtl;
 }

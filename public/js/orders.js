@@ -300,9 +300,10 @@ function generatePDFs() {
 }
 
 function fix_persian(text) {
+    text = text.replace(/[0-9]+\/[0-9]+/g , function(x){return x.split('/').reverse().join('/')})
     let symbols = ["/", '\\', ",", ".","+", "-", "_", "#", "@", "(", ")", "{", "}", "[", "]", "،", "$", "|"];
     symbols.forEach(symbol => {
-        text = text.split(symbol).join(" </b> " + symbol + " <b> ")
+        text = text.split(symbol).join("</b>" + symbol + "<b>")
     })
     let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
     let spaces = [];
@@ -342,9 +343,14 @@ function label_text(row) {
     <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
 </div>
     `;
-
+    console.log(row.address.length + row.orders.length + row.desc.length)
     if ((row.address.length + row.orders.length + row.desc.length) > 250) {
         return `<div class="long-text">${text}</div>`;
+    }
+
+
+    if ((row.address.length + row.orders.length + row.desc.length) < 120) {
+        return `<div class="short-text">${text}</div>`;
     }
     return text;
 }
