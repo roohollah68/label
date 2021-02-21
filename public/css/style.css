@@ -23,11 +23,11 @@ body{
 }
 
 .long-text ,.long-text span,.long-text b{
-    font-size: 70px;
+    font-size: 73px;
 }
 
 .short-text ,.short-text span,.short-text b{
-    font-size: 100px;
+    font-size: 99px;
 }
 
 canvas{
