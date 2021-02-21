@@ -348,7 +348,7 @@ function label_text(row) {
     }
 
 
-    if ((row.address.length + row.orders.length + row.desc.length) < 120) {
+    if ((row.address.length + row.orders.length + row.desc.length) < 150) {
         return `<div class="short-text">${text}</div>`;
     }
     return text;
