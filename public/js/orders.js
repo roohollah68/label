@@ -311,11 +311,9 @@ function fix_persian(text) {
         text = text.replace(pattern, function (x){return " </b> " +x + " <b> "})
     })
 
-
-
     text = text.replace(/\(/g, '^^')
-    text = text.replace(/\)/g, '(')
-    text = text.replace(/\^\^/g, ')')
+    text = text.replace(/\)/g, ' ( ')
+    text = text.replace(/\^\^/g, ' ) ')
 
     return text
 }
@@ -332,12 +330,11 @@ function label_text(row) {
     <span>توضیحات </span>: <b>${fix_persian(row.desc)}</b>
 </div>
     `;
-    if ((row.address.length + row.orders.length + row.desc.length) > 250) {
+    if ((row.address.length + row.orders.length + row.desc.length) > 260) {
         return `<div class="long-text">${text}</div>`;
     }
 
-
-    if ((row.address.length + row.orders.length + row.desc.length) < 150) {
+    if ((row.address.length + row.orders.length + row.desc.length) < 170) {
         return `<div class="short-text">${text}</div>`;
     }
     return text;
