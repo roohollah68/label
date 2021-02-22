@@ -300,33 +300,24 @@ function generatePDFs() {
 }
 
 function fix_persian(text) {
-    text = text.replace(/[0-9]+\/[0-9]+/g , function(x){return x.split('/').reverse().join(' / ')})
-    let symbols = ["/", '\\', ",", ".","+", "-", ":", "_", "#", "@", "(", ")", "{", "}", "[", "]", "،", "$", "|"];
+    text = text.replace(/[0-9]+\/[0-9]+/g, function (x) {
+        return x.split('/').reverse().join(' / ')
+    })
+    text = text.replace(new RegExp('\\\/','g'),function (x){return "</b>" +x + "<b>"})
+    let symbols = [ "\\\\", "\\\,", "\\\.", "\\\+", "\\\-", "\\\:", "\\\_", "\\\#", "\\\@", "\\\(", "\\\)", "\\\{", "\\\}", "\\\[", "\\\]", "\\\،", "\\\$", "\\\|"];
     symbols.forEach(symbol => {
-        text = text.split(symbol).join("</b>" + symbol + "<b>")
+        let pattern = new RegExp(symbol+'+', 'g');
+        text = text.replace(pattern, function (x){return "</b>" +x + "<b>"})
     })
-    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
-    let spaces = [];
-    for (let ii = 0; ii < text.length; ii++) {
-        if (numbers.indexOf(text[ii]) + 1) {
-            if (numbers.indexOf(text[ii + 1]) + 1 || symbols.indexOf(text[ii + 1]) + 1 || text[ii + 1] == ' ')
-                continue
-            spaces.push(ii);
-        }
-    }
-    spaces.forEach(ii => {
-        text = [text.slice(0, ii + 1), ' ', text.slice(ii + 1)].join('')
-    })
+    let number = new RegExp('[0-9۰-۹\/]+', 'g');
+    text = text.replace(number, function (x) {
+        return x + ' '
+    });
 
-    text = text.replace('(', '^^')
-    text = text.replace('(', '^^')
-    text = text.replace('(', '^^')
-    text = text.replace(')', '(')
-    text = text.replace(')', '(')
-    text = text.replace(')', '(')
-    text = text.replace('^^', ')')
-    text = text.replace('^^', ')')
-    text = text.replace('^^', ')')
+
+    text = text.replace(/\(/g, '^^')
+    text = text.replace(/\)/g, '(')
+    text = text.replace(/\^\^/g, ')')
 
     return text
 }
