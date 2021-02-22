@@ -300,15 +300,12 @@ function generatePDFs() {
 }
 
 function fix_persian(text) {
-    text = text.replace(/[0-9۰-۹]+\/\.[0-9۰-۹]+/g, function (x) {
-        return x.split('/').reverse().join(' / ')
-    })
     let number = new RegExp('[0-9۰-۹\/\.]+', 'g');
     text = text.replace(number, function (x) {
         return x + ' '
     });
-    text = text.replace(new RegExp('\\\/','g'),function (x){return "</b>" +x + "<b>"})
-    let symbols = [ "\\\\", "\\\,", "\\\.", "\\\+", "\\\-", "\\\:", "\\\_", "\\\#", "\\\@", "\\\(", "\\\)", "\\\{", "\\\}", "\\\[", "\\\]", "\\\،", "\\\$", "\\\|"];
+    text = text.replace(new RegExp('\\\/[^0-9۰-۹]','g'),function (x){return "</b>" +x + "<b>"})
+    let symbols = [ "\\\\", "\\\,", "\\\.[^0-9۰-۹]", "\\\+", "\\\-", "\\\:", "\\\_", "\\\#", "\\\@", "\\\(", "\\\)", "\\\{", "\\\}", "\\\[", "\\\]", "\\\،", "\\\$", "\\\|"];
     symbols.forEach(symbol => {
         let pattern = new RegExp(symbol+'+', 'g');
         text = text.replace(pattern, function (x){return " </b> " +x + " <b> "})
