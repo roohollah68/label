@@ -311,7 +311,7 @@ function fix_persian(text) {
     let symbols = [ "\\\\", "\\\,", "\\\.", "\\\+", "\\\-", "\\\:", "\\\_", "\\\#", "\\\@", "\\\(", "\\\)", "\\\{", "\\\}", "\\\[", "\\\]", "\\\،", "\\\$", "\\\|"];
     symbols.forEach(symbol => {
         let pattern = new RegExp(symbol+'+', 'g');
-        text = text.replace(pattern, function (x){return "</b>" +x + "<b>"})
+        text = text.replace(pattern, function (x){return " </b> " +x + " <b> "})
     })
 
 
