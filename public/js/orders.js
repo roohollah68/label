@@ -309,7 +309,7 @@ function fix_persian(text) {
         let pattern = new RegExp(symbol+'+', 'g');
         text = text.replace(pattern, function (x){return "</b>" +x + "<b>"})
     })
-    let number = new RegExp('[0-9۰-۹\/]+', 'g');
+    let number = new RegExp('[0-9۰-۹\/\.]+', 'g');
     text = text.replace(number, function (x) {
         return x + ' '
     });
