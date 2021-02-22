@@ -307,8 +307,8 @@ function fix_persian(text) {
     text = text.replace(new RegExp('\\\/[^0-9۰-۹]','g'),function (x){return "</b>" +x + "<b>"})
     let symbols = [ "\\\\", "\\\,", "\\\.[^0-9۰-۹]", "\\\+", "\\\-", "\\\:", "\\\_", "\\\#", "\\\@", "\\\(", "\\\)", "\\\{", "\\\}", "\\\[", "\\\]", "\\\،", "\\\$", "\\\|"];
     symbols.forEach(symbol => {
-        let pattern = new RegExp(symbol+'+', 'g');
-        text = text.replace(pattern, function (x){return " </b> " +x + " <b> "})
+        let pattern = new RegExp(symbol, 'g');
+        text = text.replace(pattern, function (x){return " <b> " +x + " </b> "})
     })
 
     text = text.replace(/\(/g, '^^')
