@@ -300,6 +300,11 @@ function generatePDFs() {
 }
 
 function fix_persian(text) {
+
+    text = text.replace(/[آ-ی]+/g,function (x){return `<b>${x}</b>`})
+    return text;
+
+
     let number = new RegExp('[0-9۰-۹\/\.]+', 'g');
     text = text.replace(number, function (x) {
         return x + ' '
